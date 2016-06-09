@@ -33,6 +33,7 @@ public class VKExtensionContext extends FREContext {
 		functions.put( "init", new InitFunction() );
 		functions.put( "isLoggedIn", new IsLoggedInFunction() );
 		functions.put( "logout", new LogoutFunction() );
+		functions.put( "applicationOpenURL", new ApplicationOpenURLFunction() );
 
 		return functions;
 	}
