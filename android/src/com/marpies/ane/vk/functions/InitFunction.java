@@ -20,12 +20,19 @@ import com.adobe.fre.FREContext;
 import com.adobe.fre.FREObject;
 import com.marpies.ane.vk.utils.AIR;
 import com.marpies.ane.vk.utils.FREObjectUtils;
+import com.vk.sdk.VKSdk;
 
 public class InitFunction extends BaseFunction {
 
 	@Override
 	public FREObject call( FREContext context, FREObject[] args ) {
 		super.call( context, args );
+
+		AIR.setLogEnabled( FREObjectUtils.getBoolean( args[1] ) );
+		int appId = Integer.valueOf( FREObjectUtils.getString( args[0] ) );
+
+		AIR.startAccessTokenTracker();
+		VKSdk.customInitialize( AIR.getContext().getActivity(), appId, "" );
 
 		return null;
 	}

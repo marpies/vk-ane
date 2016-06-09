@@ -19,8 +19,12 @@ package com.marpies.ane.vk.utils;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import com.marpies.ane.vk.VKExtensionContext;
+import com.marpies.ane.vk.data.AIRVKEvent;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKAccessTokenTracker;
 
 public class AIR {
 
@@ -28,6 +32,7 @@ public class AIR {
 	private static boolean mLogEnabled = false;
 
 	private static VKExtensionContext mContext;
+	private static VKAccessTokenTracker mTokenTracker;
 
 	public static void log( String message ) {
 		if( mLogEnabled ) {
@@ -54,6 +59,18 @@ public class AIR {
 			intent.putExtras( extras );
 		}
 		mContext.getActivity().startActivity( intent );
+	}
+
+	public static void startAccessTokenTracker() {
+		if( mTokenTracker == null ) {
+			mTokenTracker = new VKAccessTokenTracker() {
+				@Override
+				public void onVKAccessTokenChanged( @Nullable VKAccessToken oldToken, @Nullable VKAccessToken newToken ) {
+					String tokenJSON = (newToken == null) ? "{}" : VKAccessTokenUtils.toJSON( newToken );
+					AIR.dispatchEvent( AIRVKEvent.VK_TOKEN_UPDATE, tokenJSON );
+				}
+			};
+		}
 	}
 
 	/**
