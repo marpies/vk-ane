@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2016 Marcel Piestansky (http://marpies.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,30 +14,26 @@
  * limitations under the License.
  */
 
-package com.marpies.ane.vk;
+package com.marpies.ane.vk.functions;
 
 import com.adobe.fre.FREContext;
-import com.adobe.fre.FREFunction;
-import com.marpies.ane.vk.functions.*;
-import com.marpies.ane.vk.utils.AIR;
+import com.adobe.fre.FREObject;
+import com.vk.sdk.VKSdk;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class VKExtensionContext extends FREContext {
+public class IsLoggedInFunction extends BaseFunction {
 
 	@Override
-	public Map<String, FREFunction> getFunctions() {
-		Map<String, FREFunction> functions = new HashMap<String, FREFunction>();
+	public FREObject call( FREContext context, FREObject[] args ) {
+		super.call( context, args );
 
-		functions.put( "init", new InitFunction() );
-		functions.put( "isLoggedIn", new IsLoggedInFunction() );
+		try {
+			return FREObject.newObject( VKSdk.isLoggedIn() );
+		} catch( Exception e ) {
+			e.printStackTrace();
+		}
 
-		return functions;
+		return null;
 	}
 
-	@Override
-	public void dispose() {
-		AIR.setContext( null );
-	}
 }
+
