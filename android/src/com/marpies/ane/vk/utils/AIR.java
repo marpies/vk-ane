@@ -66,10 +66,19 @@ public class AIR {
 			mTokenTracker = new VKAccessTokenTracker() {
 				@Override
 				public void onVKAccessTokenChanged( @Nullable VKAccessToken oldToken, @Nullable VKAccessToken newToken ) {
+					AIR.log( "VKAccessTokenTracker::onVKAccessTokenChanged() new: " + newToken + " old: " + oldToken );
 					String tokenJSON = (newToken == null) ? "{}" : VKAccessTokenUtils.toJSON( newToken );
 					AIR.dispatchEvent( AIRVKEvent.VK_TOKEN_UPDATE, tokenJSON );
 				}
 			};
+			mTokenTracker.startTracking();
+		}
+	}
+
+	public static void stopAccessTokenTracker() {
+		if( mTokenTracker != null ) {
+			mTokenTracker.stopTracking();
+			mTokenTracker = null;
 		}
 	}
 
