@@ -20,8 +20,8 @@
 
 + (NSDictionary*) toJSON:(VKAccessToken*) token {
     NSMutableDictionary* json = [NSMutableDictionary dictionary];
-    [self addValue:token.accessToken forKey:@"accessToken" toDictionary:json];
     [self addValue:token.userId forKey:@"userId" toDictionary:json];
+    [self addValue:token.accessToken forKey:@"accessToken" toDictionary:json];
     [self addValue:token.secret forKey:@"secret" toDictionary:json];
     [self addValue:token.permissions forKey:@"permissions" toDictionary:json];
     [self addValue:token.email forKey:@"email" toDictionary:json];

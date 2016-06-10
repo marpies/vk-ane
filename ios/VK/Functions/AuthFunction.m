@@ -20,7 +20,7 @@
 #import "AIRVK.h"
 
 FREObject vk_auth( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
-    NSArray* permissions = [MPFREObjectUtils getNSArray:argv[0]];
+    NSArray* permissions = (argv[0] == nil) ? nil : [MPFREObjectUtils getNSArray:argv[0]];
     [AIRVK log:[NSString stringWithFormat:@"vk_auth with permissions %@", permissions]];
     [VKSdk authorize:permissions];
     return nil;

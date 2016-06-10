@@ -31,6 +31,7 @@ public class VKExtensionContext extends FREContext {
 		Map<String, FREFunction> functions = new HashMap<String, FREFunction>();
 
 		functions.put( "init", new InitFunction() );
+		functions.put( "auth", new AuthFunction() );
 		functions.put( "isLoggedIn", new IsLoggedInFunction() );
 		functions.put( "logout", new LogoutFunction() );
 		functions.put( "applicationOpenURL", new ApplicationOpenURLFunction() );
@@ -40,6 +41,7 @@ public class VKExtensionContext extends FREContext {
 
 	@Override
 	public void dispose() {
+		AIR.stopAccessTokenTracker();
 		AIR.setContext( null );
 	}
 }

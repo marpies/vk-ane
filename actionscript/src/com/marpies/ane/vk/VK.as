@@ -210,7 +210,7 @@ package com.marpies.ane.vk {
          * Extension version.
          */
         public static function get version():String {
-            return "0.0.1";
+            return "0.0.3";
         }
 
         /**
@@ -286,8 +286,7 @@ package com.marpies.ane.vk {
                     return;
                 case VK_AUTH_ERROR:
                     log( "Error auth" );
-                    eventJSON = JSON.parse( event.level );
-                    dispatchAuthResult( eventJSON.errorMessage );
+                    dispatchAuthResult( event.level );
                     return;
                 case VK_TOKEN_UPDATE:
                     log( "Token update, callbacks " + mTokenUpdateCallbacks.length );

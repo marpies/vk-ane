@@ -147,6 +147,8 @@ public class VKSdk {
     }
 
     public static VKSdk customInitialize(Context ctx, int appId, String apiVer) {
+        if( vkSdk != null ) { return null; }
+
         if (appId == 0) {
             appId = getIntFromPref(ctx, VK_SDK_APP_ID_PREF_KEY);
         }

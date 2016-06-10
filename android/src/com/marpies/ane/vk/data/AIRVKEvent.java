@@ -18,6 +18,8 @@ package com.marpies.ane.vk.data;
 
 public class AIRVKEvent {
 
+	public static final String VK_AUTH_ERROR = "vkAuthError";
+	public static final String VK_AUTH_SUCCESS = "vkAuthSuccess";
 	public static final String VK_TOKEN_UPDATE = "vkTokenUpdate";
 
 }

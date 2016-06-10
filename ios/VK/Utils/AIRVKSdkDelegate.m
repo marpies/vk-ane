@@ -46,7 +46,7 @@ static AIRVKSdkDelegate* vkDelegateSharedInstance = nil;
         [AIRVK dispatchEvent:VK_AUTH_SUCCESS withMessage:tokenJSON];
     } else {
         // Even when cancelled
-        [AIRVK dispatchEvent:VK_AUTH_ERROR withMessage:[MPStringUtils getEventErrorJSONString:0 errorMessage:result.error.localizedDescription]];
+        [AIRVK dispatchEvent:VK_AUTH_ERROR withMessage:result.error.localizedDescription];
     }
 }
 
