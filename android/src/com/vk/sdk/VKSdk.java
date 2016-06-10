@@ -466,6 +466,9 @@ public class VKSdk {
             CookieManager.getInstance().removeAllCookies(null);
         }
 
+        /* We want to be notified of a token change when user logs out */
+        notifyVKTokenChanged( VKAccessToken.currentToken(), null );
+
         VKAccessToken.replaceToken(VKUIHelper.getApplicationContext(), null);
 
         updateLoginState(context);
