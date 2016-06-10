@@ -61,14 +61,16 @@ public class AIR {
 		mContext.getActivity().startActivity( intent );
 	}
 
+	public static void notifyTokenChange( VKAccessToken newToken ) {
+		dispatchTokenChange( null, newToken );
+	}
+
 	public static void startAccessTokenTracker() {
 		if( mTokenTracker == null ) {
 			mTokenTracker = new VKAccessTokenTracker() {
 				@Override
 				public void onVKAccessTokenChanged( @Nullable VKAccessToken oldToken, @Nullable VKAccessToken newToken ) {
-					AIR.log( "VKAccessTokenTracker::onVKAccessTokenChanged() new: " + newToken + " old: " + oldToken );
-					String tokenJSON = (newToken == null) ? "{}" : VKAccessTokenUtils.toJSON( newToken );
-					AIR.dispatchEvent( AIRVKEvent.VK_TOKEN_UPDATE, tokenJSON );
+					dispatchTokenChange( oldToken, newToken );
 				}
 			};
 			mTokenTracker.startTracking();
@@ -80,6 +82,12 @@ public class AIR {
 			mTokenTracker.stopTracking();
 			mTokenTracker = null;
 		}
+	}
+
+	private static void dispatchTokenChange( @Nullable VKAccessToken oldToken, @Nullable VKAccessToken newToken ) {
+		AIR.log( "VKAccessTokenTracker::onVKAccessTokenChanged() new: " + newToken + " old: " + oldToken );
+		String tokenJSON = (newToken == null) ? "{}" : VKAccessTokenUtils.toJSON( newToken );
+		AIR.dispatchEvent( AIRVKEvent.VK_TOKEN_UPDATE, tokenJSON );
 	}
 
 	/**

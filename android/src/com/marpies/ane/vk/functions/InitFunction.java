@@ -21,6 +21,7 @@ import com.adobe.fre.FREContext;
 import com.adobe.fre.FREObject;
 import com.marpies.ane.vk.utils.AIR;
 import com.marpies.ane.vk.utils.FREObjectUtils;
+import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
@@ -44,11 +45,13 @@ public class InitFunction extends BaseFunction {
 			@Override
 			public void onResult( VKSdk.LoginState res ) {
 				AIR.log( "VKSdk.wakeUpSession::onResult " + res );
+				AIR.notifyTokenChange( VKAccessToken.currentToken() );
 			}
 
 			@Override
 			public void onError( VKError error ) {
 				AIR.log( "VKSdk.wakeUpSession::onError " + error.errorReason );
+				AIR.notifyTokenChange( VKAccessToken.currentToken() );
 			}
 		} );
 
