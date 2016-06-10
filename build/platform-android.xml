@@ -1,0 +1,10 @@
+<platform xmlns="http://ns.adobe.com/air/extension/20.0">
+
+    <packagedResources>
+        <packagedResource> 
+            <packageName>com.vk.sdk</packageName> 
+            <folderName>com.marpies.ane.vk-res</folderName> 
+        </packagedResource>
+    </packagedResources>
+
+</platform>

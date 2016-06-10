@@ -1,0 +1,35 @@
+<extension xmlns="http://ns.adobe.com/air/extension/20.0">
+
+  <id>com.marpies.ane.vk</id>
+  <versionNumber>0.0.3</versionNumber>
+
+  <platforms>
+    <platform name="iPhone-ARM">
+        <applicationDeployment>
+            <nativeLibrary>libVK.a</nativeLibrary>
+            <initializer>VKInitializer</initializer>
+            <finalizer>VKFinalizer</finalizer>
+        </applicationDeployment>
+    </platform>
+
+    <platform name="Android-ARM">
+        <applicationDeployment>
+            <nativeLibrary>libVK.jar</nativeLibrary>
+            <initializer>com.marpies.ane.vk.VKExtension</initializer>
+            <finalizer>com.marpies.ane.vk.VKExtension</finalizer>
+        </applicationDeployment>
+    </platform>
+
+    <platform name="Android-x86">
+        <applicationDeployment>
+            <nativeLibrary>libVK.jar</nativeLibrary>
+            <initializer>com.marpies.ane.vk.VKExtension</initializer>
+            <finalizer>com.marpies.ane.vk.VKExtension</finalizer>
+        </applicationDeployment>
+    </platform>
+
+    <platform name="default">
+        <applicationDeployment/>
+    </platform>
+  </platforms>
+</extension>
