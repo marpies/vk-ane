@@ -18,6 +18,7 @@ package com.marpies.ane.vk.utils;
 
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKScope;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,13 +40,13 @@ public class VKAccessTokenUtils {
 		addValueForKey( token.httpsRequired, "httpsRequired", json );
 		/* Loop through all permissions and see which one are part of this token */
 		List<String> allPermissions = VKScope.parseVkPermissionsFromInteger( Integer.MAX_VALUE );	// Get all permissions
-		List<String> activePermissions = new ArrayList<>();
+		JSONArray activePermissions = new JSONArray();
 		for( String permission : allPermissions ) {
 			if( token.hasScope( permission ) ) {
-				activePermissions.add( permission );
+				activePermissions.put( permission );
 			}
 		}
-		addValueForKey( activePermissions, "permissions", json );
+		addValueForKey( activePermissions.toString(), "permissions", json );
 		return json.toString();
 	}
 

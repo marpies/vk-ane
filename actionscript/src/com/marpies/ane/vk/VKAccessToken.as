@@ -44,10 +44,20 @@ package com.marpies.ane.vk {
             var token:VKAccessToken = new VKAccessToken();
             token.mUserId = json.userId;
             token.mAccessToken = json.accessToken;
-            token.mPermissions = Vector.<String>( json.permissions as Array );
             token.mHttpsRequired = json.httpsRequired;
             token.mCreated = json.created;
             token.mExpiresIn = json.expiresIn;
+            if( "permissions" in json ) {
+                var permissions:Array = json.permissions as Array;
+                if( permissions === null ) {
+                    try {
+                        permissions = JSON.parse( json.permissions ) as Array;
+                    } catch( e:Error ) { }
+                }
+                if( permissions !== null ) {
+                    token.mPermissions = Vector.<String>( permissions );
+                }
+            }
             if( "secret" in json ) {
                 token.mSecret = json.secret;
             }
