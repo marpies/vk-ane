@@ -18,6 +18,7 @@ package com.marpies.ane.vk.functions;
 
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREObject;
+import com.marpies.ane.vk.utils.AIR;
 import com.vk.sdk.VKSdk;
 
 public class LogoutFunction extends BaseFunction {
@@ -26,6 +27,7 @@ public class LogoutFunction extends BaseFunction {
 	public FREObject call( FREContext context, FREObject[] args ) {
 		super.call( context, args );
 
+		AIR.log( "VKSdk::logout()" );
 		VKSdk.logout();
 
 		return null;

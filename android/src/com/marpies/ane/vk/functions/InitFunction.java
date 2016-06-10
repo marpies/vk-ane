@@ -16,11 +16,14 @@
 
 package com.marpies.ane.vk.functions;
 
+import android.app.Activity;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREObject;
 import com.marpies.ane.vk.utils.AIR;
 import com.marpies.ane.vk.utils.FREObjectUtils;
+import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKError;
 
 public class InitFunction extends BaseFunction {
 
@@ -31,8 +34,23 @@ public class InitFunction extends BaseFunction {
 		AIR.setLogEnabled( FREObjectUtils.getBoolean( args[1] ) );
 		int appId = Integer.valueOf( FREObjectUtils.getString( args[0] ) );
 
+		AIR.log( "Initializing VKSdk" );
+
+		Activity activity = AIR.getContext().getActivity();
+
 		AIR.startAccessTokenTracker();
-		VKSdk.customInitialize( AIR.getContext().getActivity(), appId, "" );
+		VKSdk.customInitialize( activity, appId, "" );
+		VKSdk.wakeUpSession( activity, new VKCallback<VKSdk.LoginState>() {
+			@Override
+			public void onResult( VKSdk.LoginState res ) {
+				AIR.log( "VKSdk.wakeUpSession::onResult " + res );
+			}
+
+			@Override
+			public void onError( VKError error ) {
+				AIR.log( "VKSdk.wakeUpSession::onError " + error.errorReason );
+			}
+		} );
 
 		return null;
 	}
