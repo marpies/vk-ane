@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<application xmlns="http://ns.adobe.com/air/application/22.0">
+
+    <id>com.marpies.demo.vk</id>
+
+    <filename>VK Demo</filename>
+
+    <name>VK Demo</name>
+
+    <versionNumber>0.0.2</versionNumber>
+
+    <extensions>
+        <extensionID>com.marpies.ane.vk</extensionID>
+        <extensionID>com.marpies.ane.androidsupport</extensionID>
+    </extensions>
+
+    <!-- Settings for the application's initial window. Required. -->
+    <initialWindow>
+        <content>Main.swf</content>
+        <visible>true</visible>
+        <aspectRatio>landscape</aspectRatio>
+        <autoOrients>true</autoOrients>
+        <fullScreen>false</fullScreen>
+        <depthAndStencil>true</depthAndStencil>
+        <renderMode>direct</renderMode>
+    </initialWindow>
+
+    <supportedLanguages>en</supportedLanguages>
+
+    <!--<icon>
+        <image16x16></image16x16>
+        <image29x29></image29x29>
+        <image32x32></image32x32>
+        <image36x36></image36x36>
+        <image40x40></image40x40>
+        <image48x48></image48x48>
+        <image50x50></image50x50>
+        <image57x57></image57x57>
+        <image58x58></image58x58>
+        <image60x60></image60x60>
+        <image72x72></image72x72>
+        <image76x76></image76x76>
+        <image80x80></image80x80>
+        <image96x96></image96x96>
+        <image100x100></image100x100>
+        <image114x114></image114x114>
+        <image120x120></image120x120>
+        <image128x128></image128x128>
+        <image144x144></image144x144>
+        <image152x152></image152x152>
+        <image512x512></image512x512>
+        <image732x412></image732x412>
+        <image1024x1024></image1024x1024>
+    </icon>-->
+
+    <!-- Whether the application handles the update when a user double-clicks an update version of the AIR file (true),
+         or the default AIR application installer handles the update (false). Optional. Default false. -->
+    <!--<customUpdateUI></customUpdateUI>-->
+
+    <!-- Whether the application can be launched when the user clicks a link in a web browser. Optional. Default false. -->
+    <!-- <allowBrowserInvocation>true</allowBrowserInvocation> -->
+
+    <!-- iOS specific capabilities -->
+    <iPhone>
+        <!-- A list of plist key/value pairs to be added to the application Info.plist -->
+        <InfoAdditions>
+            <![CDATA[
+            <key>UIDeviceFamily</key>
+            <array>
+                <!-- iPhone and iPod touch devices -->
+                <string>1</string>
+                <!-- iPad devices -->
+                <string>2</string>
+            </array>
+
+            <key>MinimumOSVersion</key>
+            <string>7.0</string>
+
+            <key>CFBundleURLTypes</key>
+            <array>
+                <dict>
+                    <key>CFBundleURLSchemes</key>
+                        <array>
+                            <string>vk{APP_ID}</string>
+                        </array>
+                </dict>
+            </array>
+
+            <key>LSApplicationQueriesSchemes</key>
+            <array>
+                <string>vk</string>
+                <string>vk-share</string>
+                <string>vkauthorize</string>
+            </array>
+            ]]>
+        </InfoAdditions>
+
+        <!-- A list of plist key/value pairs to be added to the application Entitlements.plist -->
+        <!--<Entitlements>
+            <![CDATA[
+            <key>keychain-access-groups</key>
+            <array>
+                <string></string>
+                <string></string>
+            </array>
+            ]]>
+        </Entitlements>-->
+
+        <requestedDisplayResolution>high</requestedDisplayResolution>
+    </iPhone>
+
+    <android>
+        <manifestAdditions>
+            <![CDATA[
+            <manifest android:installLocation="auto">
+                <uses-permission android:name="android.permission.INTERNET"/>
+
+                <application>
+
+                    <activity 
+                        android:name="com.marpies.ane.vk.AuthActivity"
+                        android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+                        android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+                    />
+
+                    <activity
+                        android:name="com.vk.sdk.VKServiceActivity"
+                        android:label="ServiceActivity"
+                        android:theme="@style/VK.Transparent"
+                    />
+
+                </application>
+
+            </manifest>
+            ]]>
+        </manifestAdditions>
+
+        <!-- Color depth for the app (either "32bit" or "16bit"). Optional. Default 16bit before namespace 3.0, 32bit after -->
+        <!--<colorDepth></colorDepth>-->
+        <!-- Indicates if the app contains video or not. Necessary for ordering of video planes with graphics plane, especially in Jellybean - if you app does video this must be set to true - valid values are true or false -->
+        <!-- <containsVideo></containsVideo> -->
+    </android>
+
+</application>
