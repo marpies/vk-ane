@@ -117,14 +117,23 @@ package com.marpies.ane.vk {
             mErrorCallback = value;
         }
 
+        /**
+         * @private
+         */
         internal function get hasErrorCallback():Boolean {
             return mErrorCallback !== null;
         }
 
+        /**
+         * @private
+         */
         internal function get hasResponseCallback():Boolean {
             return mResponseCallback !== null;
         }
 
+        /**
+         * @private
+         */
         internal function get hasAnyCallback():Boolean {
             return hasErrorCallback || hasResponseCallback;
         }
