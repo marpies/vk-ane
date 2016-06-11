@@ -32,20 +32,24 @@ package com.marpies.ane.vk {
 
         /* VK objects */
         private static var mAccessToken:VKAccessToken;
+        private static var mRequestBuilder:VKRequestBuilder;
 
         /* Misc */
         private static var mLogEnabled:Boolean;
         private static var mInitialized:Boolean;
 
         /* Callbacks */
+        private static var mRequestIdCounter:int;
         private static var mAuthCallback:Function;
-        private static var mCallbackMap:Dictionary;
+        private static var mRequestMap:Dictionary;
         private static var mTokenUpdateCallbacks:Vector.<Function> = new <Function>[];
 
         /* Internal event codes */
         private static const VK_AUTH_ERROR:String = "vkAuthError";
         private static const VK_AUTH_SUCCESS:String = "vkAuthSuccess";
         private static const VK_TOKEN_UPDATE:String = "vkTokenUpdate";
+        private static const VK_REQUEST_SUCCESS:String = "vkRequestSuccess";
+        private static const VK_REQUEST_ERROR:String = "vkRequestError";
 
         /**
          * @private
@@ -86,10 +90,11 @@ package com.marpies.ane.vk {
                 return false;
             }
 
-            mCallbackMap = new Dictionary();
+            mRequestMap = new Dictionary();
             if( mTokenUpdateCallbacks === null ) {
                 mTokenUpdateCallbacks = new <Function>[];
             }
+            mRequestBuilder = VKRequestBuilder.instance;
 
             /* Listen for native library events */
             mContext.addEventListener( StatusEvent.STATUS, onStatus );
@@ -198,6 +203,16 @@ package com.marpies.ane.vk {
         }
 
         /**
+         * Getter for internal request builder used for creating and sending requests to VK network.
+         */
+        public static function get request():VKRequestBuilder {
+            if( !isSupported ) return null;
+
+            if( mRequestBuilder === null ) throw new Error( "Initialize the extension before making a request." );
+            return mRequestBuilder.init();
+        }
+
+        /**
          * Returns <code>true</code> if user is logged in.
          */
         public static function get isLoggedIn():Boolean {
@@ -210,7 +225,7 @@ package com.marpies.ane.vk {
          * Extension version.
          */
         public static function get version():String {
-            return "0.0.3";
+            return "0.0.4";
         }
 
         /**
@@ -228,6 +243,15 @@ package com.marpies.ane.vk {
          *
          */
 
+        internal static function sendRequestInternal( request:VKRequest ):void {
+            var requestId:int = registerRequest( request );
+            var params:Array = getArrayFromObject( request.parameters );
+
+            log( "VK::sendRequestInternal() " + request.method + " params: " + params + " id: " + requestId );
+
+            mContext.call( "request", request.method, params, requestId );
+        }
+
         private static function dispatchAuthResult( error:String ):void {
             if( mAuthCallback !== null ) {
                 mAuthCallback( error );
@@ -236,40 +260,57 @@ package com.marpies.ane.vk {
         }
 
         /**
-         * Registers given callback and generates ID which is used to look the callback up when it is time to call it.
-         * @param callback Function to register.
-         * @return ID of the callback.
+         * Registers given request and generates ID which is used to look the request up when
+         * it is time to call its callback methods.
+         *
+         * @param request Function to register.
+         * @return ID of the request.
          */
-        private static function registerCallback( callback:Function ):int {
-            if( callback == null ) return -1;
+        private static function registerRequest( request:VKRequest ):int {
+            if( request === null || !request.hasAnyCallback ) return -1;
 
-            var id:int;
-            do {
-                id = Math.random() * 100;
-            } while( id in mCallbackMap );
-
-            mCallbackMap[id] = callback;
-            return id;
+            mRequestMap[mRequestIdCounter] = request;
+            return mRequestIdCounter++;
         }
 
         /**
-         * Gets registered callback with given ID.
-         * @param callbackID ID of the callback to retrieve.
-         * @return Callback registered with given ID, or <code>null</code> if no such callback exists.
+         * Gets registered request with given ID.
+         *
+         * @param requestId ID of the request to retrieve.
+         * @return Request registered with given ID, or <code>null</code> if no such request exists.
          */
-        private static function getCallback( callbackID:int ):Function {
-            if( callbackID == -1 || !(callbackID in mCallbackMap) ) return null;
-            return mCallbackMap[callbackID];
+        private static function getRequest( requestId:int ):VKRequest {
+            if( requestId == -1 || !(requestId in mRequestMap) ) return null;
+            return mRequestMap[requestId];
         }
 
         /**
-         * Unregisters callback with given ID.
-         * @param callbackID ID of the callback to unregister.
+         * Unregisters request with given ID.
+         *
+         * @param requestId ID of the request to unregister.
          */
-        private static function unregisterCallback( callbackID:int ):void {
-            if( callbackID in mCallbackMap ) {
-                delete mCallbackMap[callbackID];
+        private static function unregisterRequest( requestId:int ):void {
+            if( requestId in mRequestMap ) {
+                delete mRequestMap[requestId];
             }
+        }
+
+        /**
+         * Returns a list of key-values from key-value object, e.g. { "key": "val" } -> [ "key", "val" ].
+         * @param object Key-value object to transform into list.
+         * @return List of key-values from <code>object</code>, or <code>null</code> if <code>object</code> is <code>null</code>.
+         */
+        private static function getArrayFromObject( object:Object ):Array {
+            var properties:Array = null;
+            if( object !== null ) {
+                properties = [];
+                /* Create a list of object properties, that is a key followed by its value */
+                for( var key:String in object ) {
+                    properties[properties.length] = key;
+                    properties[properties.length] = object[key];
+                }
+            }
+            return properties;
         }
 
         private static function validateExtensionContext():void {
@@ -277,7 +318,9 @@ package com.marpies.ane.vk {
         }
 
         private static function onStatus( event:StatusEvent ):void {
-            var eventJSON:Object = null;
+            var request:VKRequest = null;
+            var requestId:int = -1;
+            var responseJSON:Object = null;
             switch( event.code ) {
                 case VK_AUTH_SUCCESS:
                     log( "Success auth" );
@@ -295,6 +338,29 @@ package com.marpies.ane.vk {
                     var length:int = mTokenUpdateCallbacks.length;
                     for( var i:int = 0; i < length; ++i ) {
                         mTokenUpdateCallbacks[i]();
+                    }
+                    return;
+                case VK_REQUEST_SUCCESS:
+                    responseJSON = JSON.parse( event.level );
+                    log( "Request success" );
+                    requestId = responseJSON.requestId;
+                    request = getRequest( requestId );
+                    if( request !== null && request.hasResponseCallback ) {
+                        /* Delete 'requestId' from the response JSON (it's manually inserted in
+                         * native library for us to retrieve the correct VKRequest here in AS3) */
+                        delete responseJSON.requestId;
+                        request.responseCallback( responseJSON, request );
+                        unregisterRequest( requestId );
+                    }
+                    return;
+                case VK_REQUEST_ERROR:
+                    responseJSON = JSON.parse( event.level );
+                    log( "Request error: " + responseJSON.errorMessage );
+                    requestId = responseJSON.requestId;
+                    request = getRequest( requestId );
+                    if( request !== null && request.hasErrorCallback ) {
+                        request.errorCallback( responseJSON.errorMessage );
+                        unregisterRequest( requestId );
                     }
                     return;
             }
