@@ -69,7 +69,10 @@ public class FREObjectUtils {
 		try {
 			for( long i = 0; i < array.getLength(); i++ ) {
 				try {
-					result.add( getString( array.getObjectAt( i ) ) );
+					String element = getString( array.getObjectAt( i ) );
+					if( element != null ) {
+						result.add( element );
+					}
 				} catch( Exception e ) {
 					e.printStackTrace();
 				}
