@@ -16,11 +16,8 @@
 
 #import "IsLoggedInFunction.h"
 #import <AIRExtHelpers/MPFREObjectUtils.h>
-#import "AIRVK.h"
 #import "VKSdk.h"
 
 FREObject vk_isLoggedIn( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
-    [AIRVK log:@"vk_isLoggedIn"];
-    
     return [MPFREObjectUtils getFREObjectFromBOOL:[VKSdk isLoggedIn]];
 }

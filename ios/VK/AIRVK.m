@@ -22,6 +22,7 @@
 #import "Functions/ApplicationOpenURLFunction.h"
 #import "Functions/IsLoggedInFunction.h"
 #import "Functions/LogoutFunction.h"
+#import "Functions/RequestFunction.h"
 
 static BOOL airVKLogEnabled = NO;
 FREContext airVKExtContext = nil;
@@ -83,7 +84,7 @@ void VKContextInitializer( void* extData,
                                   FREContext ctx,
                                   uint32_t* numFunctionsToSet,
                                   const FRENamedFunction** functionsToSet ) {
-    uint32_t numFunctions = 5;
+    uint32_t numFunctions = 6;
     *numFunctionsToSet = numFunctions;
     
     FRENamedFunction* functionArray = (FRENamedFunction*) malloc( sizeof( FRENamedFunction ) * numFunctions );
@@ -93,6 +94,7 @@ void VKContextInitializer( void* extData,
     VKAddFunction( functionArray, "auth", &vk_auth, &index );
     VKAddFunction( functionArray, "applicationOpenURL", &vk_applicationOpenURL, &index );
     VKAddFunction( functionArray, "logout", &vk_logout, &index );
+    VKAddFunction( functionArray, "request", &vk_request, &index );
     VKAddFunction( functionArray, "isLoggedIn", &vk_isLoggedIn, &index );
     
     *functionsToSet = functionArray;

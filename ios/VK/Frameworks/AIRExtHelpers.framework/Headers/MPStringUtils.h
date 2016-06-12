@@ -18,11 +18,11 @@
 
 @interface MPStringUtils : NSObject
 
-+ (NSString*) getEventErrorJSONString:(int) listenerID errorMessage:(NSString*) errorMessage;
++ (NSString*) getEventErrorJSONString:(int) requestId errorMessage:(NSString*) errorMessage;
 
-+ (NSString*) getSingleValueJSONString:(int) listenerID key:(NSString*) key value:(NSString*) value;
++ (NSString*) getSingleValueJSONString:(int) requestId key:(NSString*) key value:(NSString*) value;
 
-+ (NSString*) getListenerJSONString:(int) listenerID;
++ (NSString*) getListenerJSONString:(int) requestId;
 
 + (NSString*) getJSONString:(NSDictionary*) json;
 
