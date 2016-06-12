@@ -45,26 +45,31 @@ public class RequestFunction extends BaseFunction {
 	public FREObject call( FREContext context, FREObject[] args ) {
 		super.call( context, args );
 
-		mRequestId = FREObjectUtils.getInt( args[2] ); // Value must be assigned before calling parseRequestParameters
 		FREArray params = (args[1] != null) ? (FREArray) args[1] : null;
-		VKParameters vkParameters = parseRequestParameters( params );
+		VKParameters vkParameters = new VKParameters();
+		String errorMessage = parseRequestParameters( params, vkParameters );
 
-		String method = FREObjectUtils.getString( args[0] );
-		/* Execute the request */
-		AIR.log( "Sending VKRequest " + method );
-		VKRequest request = new VKRequest( method );
-		if( vkParameters != null ) {
+		mRequestId = FREObjectUtils.getInt( args[2] );
+		/* Send request if there's no error parsing the parameters */
+		if( errorMessage == null ) {
+			String method = FREObjectUtils.getString( args[0] );
+			/* Execute the request */
+			AIR.log( "Sending VKRequest " + method );
+			VKRequest request = new VKRequest( method );
 			request.addExtraParameters( vkParameters );
+			request.executeWithListener( getRequestListener() );
 		}
-		request.executeWithListener( getRequestListener() );
+		/* Or dispatch error */
+		else {
+			AIR.log( "Error parsing request parameters: " + errorMessage );
+			AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_ERROR, StringUtils.getEventErrorJSON( mRequestId, errorMessage ) );
+		}
 
 		return null;
 	}
 
-	private VKParameters parseRequestParameters( FREArray params ) {
-		VKParameters vkParameters = null;
+	private String parseRequestParameters( FREArray params, VKParameters vkParameters ) {
 		if( params != null ) {
-			vkParameters = new VKParameters();
 			try {
 				long length = params.getLength();
 				String key = null;
@@ -105,12 +110,11 @@ public class RequestFunction extends BaseFunction {
 				}
 			} catch( Exception e ) {
 				e.printStackTrace();
-				AIR.log( "Error parsing request parameters: " + e.getLocalizedMessage() );
-				AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_ERROR, StringUtils.getEventErrorJSON( mRequestId, e.getLocalizedMessage() ) );
-				return null;
+				return e.getLocalizedMessage();
 			}
 		}
-		return vkParameters;
+		/* No error message */
+		return null;
 	}
 
 	private FREObjectType getFREObjectType( FREObject object ) {
