@@ -16,18 +16,24 @@
 
 package com.marpies.ane.vk.functions;
 
-import android.os.Bundle;
+import android.content.Intent;
+import com.adobe.air.AndroidActivityWrapper;
+import com.adobe.air.IActivityResultCallback;
 import com.adobe.fre.FREArray;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREObject;
-import com.marpies.ane.vk.AuthActivity;
+import com.marpies.ane.vk.data.AIRVKEvent;
 import com.marpies.ane.vk.utils.AIR;
 import com.marpies.ane.vk.utils.FREObjectUtils;
+import com.marpies.ane.vk.utils.VKAccessTokenUtils;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKCallback;
+import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKError;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class AuthFunction extends BaseFunction {
+public class AuthFunction extends BaseFunction implements IActivityResultCallback {
 
 	@Override
 	public FREObject call( FREContext context, FREObject[] args ) {
@@ -35,17 +41,33 @@ public class AuthFunction extends BaseFunction {
 
 		ArrayList<String> permissions = (args[0] == null) ? null : (ArrayList<String>) FREObjectUtils.getListOfString( (FREArray) args[0] );
 
-		Bundle extras = null;
-		if( permissions != null ) {
-			extras = new Bundle();
-			extras.putStringArrayList( AuthActivity.EXTRA_PREFIX + ".permissions", permissions );
-		}
+		AndroidActivityWrapper.GetAndroidActivityWrapper().addActivityResultListener( this );
 
-		AIR.log( "Starting AuthActivity" );
+		AIR.log( "AuthFunction | VKSdk::login" );
 
-		AIR.startActivity( AuthActivity.class, extras );
+		VKSdk.login( AIR.getContext().getActivity(), (permissions != null) ? permissions.toArray( new String[0] ) : null );
 
 		return null;
+	}
+
+	@Override
+	public void onActivityResult( int requestCode, int resultCode, Intent data ) {
+		if( !VKSdk.onActivityResult( requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
+			@Override
+			public void onResult( VKAccessToken res ) {
+				AIR.log( "AuthFunction::onActivityResult | VK_AUTH_SUCCESS" );
+				AIR.dispatchEvent( AIRVKEvent.VK_AUTH_SUCCESS, VKAccessTokenUtils.toJSON( res ) );
+			}
+
+			@Override
+			public void onError( VKError error ) {
+				AIR.log( "AuthFunction::onActivityResult | VK_AUTH_ERROR: " + error.errorMessage + " reason: " + error.errorReason );
+				AIR.dispatchEvent( AIRVKEvent.VK_AUTH_ERROR, (error.errorMessage == null) ? "Error - user denied access." : error.errorMessage );
+			}
+		} ) ) {
+			AIR.log( "AuthFunction::onActivityResult | no callback" );
+		}
+		AndroidActivityWrapper.GetAndroidActivityWrapper().removeActivityResultListener( this );
 	}
 
 }

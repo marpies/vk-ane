@@ -71,7 +71,7 @@ If you plan to use `nohttps` in your requests, add the following snippet as well
 </dict>
 ```
 
-For Android support, modify the `manifestAdditions` so that it contains the following permissions and activities:
+For Android support, modify the `manifestAdditions` so that it contains the following permission and activity:
 
 ```xml
 <android>
@@ -81,12 +81,6 @@ For Android support, modify the `manifestAdditions` so that it contains the foll
             <uses-permission android:name="android.permission.INTERNET"/>
 
             <application>
-
-                <activity 
-                    android:name="com.marpies.ane.vk.AuthActivity"
-                    android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
-                    android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-                />
 
                 <activity
                     android:name="com.vk.sdk.VKServiceActivity"
