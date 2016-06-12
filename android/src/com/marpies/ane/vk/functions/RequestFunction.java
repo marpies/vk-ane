@@ -45,11 +45,11 @@ public class RequestFunction extends BaseFunction {
 	public FREObject call( FREContext context, FREObject[] args ) {
 		super.call( context, args );
 
+		mRequestId = FREObjectUtils.getInt( args[2] ); // Value must be assigned before calling parseRequestParameters
 		FREArray params = (args[1] != null) ? (FREArray) args[1] : null;
 		VKParameters vkParameters = parseRequestParameters( params );
 
 		String method = FREObjectUtils.getString( args[0] );
-		mRequestId = FREObjectUtils.getInt( args[2] );
 		/* Execute the request */
 		AIR.log( "Sending VKRequest " + method );
 		VKRequest request = new VKRequest( method );
