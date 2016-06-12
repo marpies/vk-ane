@@ -8,7 +8,7 @@
 
     <name>VK Demo</name>
 
-    <versionNumber>0.0.2</versionNumber>
+    <versionNumber>0.0.4</versionNumber>
 
     <extensions>
         <extensionID>com.marpies.ane.vk</extensionID>
@@ -117,12 +117,6 @@
                 <uses-permission android:name="android.permission.INTERNET"/>
 
                 <application>
-
-                    <activity 
-                        android:name="com.marpies.ane.vk.AuthActivity"
-                        android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
-                        android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-                    />
 
                     <activity
                         android:name="com.vk.sdk.VKServiceActivity"
