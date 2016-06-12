@@ -170,7 +170,7 @@ public class RequestFunction extends BaseFunction {
 			public void onError( VKError error ) {
 				// captcha error, validation error
 				AIR.log( "VKRequest::onError: " + error.errorMessage + " reason: " + error.errorReason + " code: " + error.errorCode );
-				String errorMessage = (error.errorMessage != null) ? error.errorMessage : "Empty error message";
+				String errorMessage = ((error.errorMessage != null) ? error.errorMessage : "Empty error message") + " | Error code: " + error.errorCode;
 				AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_ERROR, StringUtils.getEventErrorJSON( mRequestId, errorMessage ) );
 			}
 		};
