@@ -152,6 +152,66 @@ VK.logout();
 // Token update callback will be called (if added before)
 ```
 
+#### Requests
+
+To see all the request methods and their parameters, please visit the [official documentation](https://new.vk.com/dev/methods).
+
+To send a request to VK network, use the `VK.request` getter. It is a [builder object](https://en.wikipedia.org/wiki/Builder_pattern) and the usage is as follows:
+
+```as3
+// Simple request with no parameters
+VK.request
+    .setMethod( "account.getAppPermissions" )
+    .setResponseCallback( onGetAppPermissionsResponse )
+    .setErrorCallback( onGetAppPermissionsError )
+    .send();
+...
+// Response (success) callback expects Object and VKRequest parameters
+private function onGetAppPermissionsResponse( response:Object, originalRequest:VKRequest ):void {
+    trace( "VKRequest::onGetAppPermissionsResponse for request: " + originalRequest.method );
+    // response param is a JSON
+    // originalRequest param may be useful to retrieve the request method (for example if you use a single callback method for different requests)
+}
+
+// Error callback expects String (that is the error message if provided)
+private function onGetAppPermissionsError( error:String ):void {
+    trace( "VKRequest::onGetAppPermissionsError: " + error );
+}
+
+...
+
+// A little more complex request with parameters
+VK.request
+    .setMethod( "users.get" )
+    .setParameters( {
+        user_ids: ["210700286"],
+        fields  : "photo_200,city,verified"
+    } )
+    .setResponseCallback( onGetUsersResponse )
+    .setErrorCallback( onGetUsersError )
+    .send();
+...
+private function onGetUsersResponse( response:Object, originalRequest:VKRequest ):void {
+    Logger.log( "VK::onGetUsersResponse for request: " + originalRequest.method );
+    // response JSON could be something like this:
+    /*
+    { 
+    response: [
+            first_name: "Lindsey",
+            photo_200: "https://pp.vk.me/c631329/v631329286/23f6c/oMiHw7KjcrU.jpg",
+            id: 210700286,
+            verified: 1,
+            city: {
+              title: Los Angeles
+              id: 5331
+            },
+            last_name: "Stirling"
+        ]
+    }
+    */
+}
+```
+
 ## Requirements
 
 * iOS 7+
