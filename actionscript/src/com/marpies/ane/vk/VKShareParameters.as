@@ -29,6 +29,8 @@ package com.marpies.ane.vk {
 
         /**
          * List of images to attach to the shared post.
+         * You must be granted <code>VKPermissions.PHOTOS</code> permission to successfully
+         * use this feature.
          */
         public function get attachmentImages():Vector.<BitmapData> {
             return mAttachmentImages;
@@ -105,7 +107,8 @@ package com.marpies.ane.vk {
          *
          * The callback is expected to have this signature:
          * <listing version="3.0">
-         * function onShareCompleteCallback( postId:int ):void {
+         * function onShareCompleteCallback( postId:String ):void {
+         *
          * }
          * </listing>
          */

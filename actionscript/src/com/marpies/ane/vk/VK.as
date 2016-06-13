@@ -253,7 +253,7 @@ package com.marpies.ane.vk {
          * Extension version.
          */
         public static function get version():String {
-            return "0.0.4";
+            return "1.0.0";
         }
 
         /**
@@ -404,12 +404,24 @@ package com.marpies.ane.vk {
                     return;
                 case VK_SHARE_COMPLETE:
                     log( "Share complete, postId: " + event.level );
+                    if( mShareCompleteCallback !== null ) {
+                        mShareCompleteCallback( event.level );
+                    }
+                    removeShareCallbacks();
                     return;
                 case VK_SHARE_CANCEL:
                     log( "Share cancelled" );
+                    if( mShareCancelCallback !== null ) {
+                        mShareCancelCallback();
+                    }
+                    removeShareCallbacks();
                     return;
                 case VK_SHARE_ERROR:
                     log( "Share error: " + event.level );
+                    if( mShareErrorCallback !== null ) {
+                        mShareErrorCallback( event.level );
+                    }
+                    removeShareCallbacks();
                     return;
             }
         }
@@ -435,6 +447,12 @@ package com.marpies.ane.vk {
             var json:Object = JSON.parse( jsonStr );
 //            printObject( json, " " );
             mAccessToken = VKAccessToken.fromJSON( json );
+        }
+
+        private static function removeShareCallbacks():void {
+            mShareCancelCallback = null;
+            mShareCompleteCallback = null;
+            mShareErrorCallback = null;
         }
 
         private static function printObject( object:Object, indent:String = "" ):void {
