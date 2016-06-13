@@ -6,8 +6,8 @@ Development of this extension is supported by [Master Tigra, Inc.](https://githu
 
 * Session management (auth, logout)
 * Acessing user token
-* (WIP) Requests
-* (WIP) Sharing
+* Requests (see [API methods](https://new.vk.com/dev/methods))
+* Sharing with native UI
 
 ## Getting started
 
@@ -156,7 +156,7 @@ VK.logout();
 
 To see all the request methods and their parameters, please visit the [official documentation](https://new.vk.com/dev/methods).
 
-To send a request to VK network, use the `VK.request` getter. It is a [builder object](https://en.wikipedia.org/wiki/Builder_pattern) and the usage is as follows:
+To send a request to VK network, use `VK.request` getter. It is a [builder object](https://en.wikipedia.org/wiki/Builder_pattern) and the usage is as follows:
 
 ```as3
 // Simple request with no parameters
@@ -212,6 +212,52 @@ private function onGetUsersResponse( response:Object, originalRequest:VKRequest 
 }
 ```
 
+#### Sharing with native UI
+
+The extension allows you to present native UI dialogs with pre-populated content, including text, link and images. To show the share dialog, use `VK.share` getter. Similar to the `VK.request` API, it's a builder object which allows you to easily set only the data you need:
+
+```as3
+// Simple dialog with text and a link
+VK.share
+     .setText( "Hello, sharing this fine link with you." )
+     .setAttachmentLink( "VK.com", "http://vk.com" )
+     .setCompleteCallback( onShareCompleted )
+     .setCancelCallback( onShareCancelled )
+     .setErrorCallback( onShareFailed )
+     .showDialog();
+...
+// Complete callback expects String (id of the post that's just been created)
+private function onShareCompleted( postId:String ):void {
+    trace( "VK::onShareCompleted postId: " + postId );
+}
+
+// No parameters expected
+private function onShareCancelled():void {
+    trace( "VK::onShareCancelled" );
+}
+
+// Error callback expects String (that is the error message if provided)
+private function onShareFailed( errorMessage:String ):void {
+    trace( "VK::onShareFailed " + errorMessage );
+}
+
+...
+
+// Dialog with BitmapData (photos) that will be uploaded
+VK.share
+     .setAttachmentImages( new <BitmapData>[ bmp1.bitmapData, bmp2.bitmapData ] )
+     ...
+     .showDialog();
+
+...
+
+// Dialog referencing IDs of photos that have been uploaded to VK earlier
+VK.share
+     .setUploadedPhotos( new <String>["photo368852665_420167096", "photo368852665_420213267"] )
+     ...
+     .showDialog();
+```
+
 ## Requirements
 
 * iOS 7+
@@ -226,3 +272,9 @@ ANT build scripts are available in the [build](build/) directory. Edit [build.pr
 
 ## Author
 The ANE has been written by [Marcel Piestansky](https://twitter.com/marpies) and is distributed under [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
+
+## Change log
+
+#### June 13, 2016 (v1.0.0)
+
+* Public release
