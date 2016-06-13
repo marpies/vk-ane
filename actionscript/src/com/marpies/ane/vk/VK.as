@@ -33,6 +33,7 @@ package com.marpies.ane.vk {
         /* VK objects */
         private static var mAccessToken:VKAccessToken;
         private static var mRequestBuilder:VKRequestBuilder;
+        private static var mShareBuilder:VKShareBuilder;
 
         /* Misc */
         private static var mLogEnabled:Boolean;
@@ -41,6 +42,9 @@ package com.marpies.ane.vk {
         /* Callbacks */
         private static var mRequestIdCounter:int;
         private static var mAuthCallback:Function;
+        private static var mShareCompleteCallback:Function;
+        private static var mShareCancelCallback:Function;
+        private static var mShareErrorCallback:Function;
         private static var mRequestMap:Dictionary;
         private static var mTokenUpdateCallbacks:Vector.<Function> = new <Function>[];
 
@@ -50,6 +54,9 @@ package com.marpies.ane.vk {
         private static const VK_TOKEN_UPDATE:String = "vkTokenUpdate";
         private static const VK_REQUEST_SUCCESS:String = "vkRequestSuccess";
         private static const VK_REQUEST_ERROR:String = "vkRequestError";
+        private static const VK_SHARE_COMPLETE:String = "vkShareComplete";
+        private static const VK_SHARE_CANCEL:String = "vkShareCancel";
+        private static const VK_SHARE_ERROR:String = "vkShareError";
 
         /**
          * @private
@@ -95,6 +102,7 @@ package com.marpies.ane.vk {
                 mTokenUpdateCallbacks = new <Function>[];
             }
             mRequestBuilder = VKRequestBuilder.instance;
+            mShareBuilder = VKShareBuilder.instance;
 
             /* Listen for native library events */
             mContext.addEventListener( StatusEvent.STATUS, onStatus );
@@ -189,6 +197,8 @@ package com.marpies.ane.vk {
             mContext.removeEventListener( StatusEvent.STATUS, onStatus );
             NativeApplication.nativeApplication.removeEventListener( InvokeEvent.INVOKE, onInvokeHandler );
 
+            mRequestBuilder = null;
+            mShareBuilder = null;
             mTokenUpdateCallbacks = null;
             mContext.dispose();
             mContext = null;
@@ -218,6 +228,16 @@ package com.marpies.ane.vk {
 
             if( mRequestBuilder === null ) throw new Error( "Initialize the extension before making a request." );
             return mRequestBuilder.init();
+        }
+
+        /**
+         * Getter for internal request builder used for creating and sending requests to VK network.
+         */
+        public static function get share():VKShareBuilder {
+            if( !isSupported ) return null;
+
+            if( mShareBuilder === null ) throw new Error( "Initialize the extension before sharing." );
+            return mShareBuilder.init();
         }
 
         /**
@@ -255,9 +275,20 @@ package com.marpies.ane.vk {
             var requestId:int = registerRequest( request );
             var params:Array = getArrayFromObject( request.parameters );
 
-            log( "VK::sendRequestInternal() " + request.method + " params: " + params + " id: " + requestId );
+            log( "VK::sendRequestInternal()" );
 
             mContext.call( "request", request.method, params, requestId );
+        }
+
+        internal static function showShareDialogInternal( params:VKShareParameters ):void {
+            log( "VK::showShareDialogInternal()" );
+            
+            /* Store callbacks */
+            mShareCompleteCallback = params.completeCallback;
+            mShareCancelCallback = params.cancelCallback;
+            mShareErrorCallback = params.errorCallback;
+
+            mContext.call( "share", params.text, params.attachmentLinkTitle, params.attachmentLinkURL, params.uploadedPhotos, params.attachmentImages );
         }
 
         private static function dispatchAuthResult( error:String ):void {
@@ -370,6 +401,15 @@ package com.marpies.ane.vk {
                         request.errorCallback( responseJSON.errorMessage );
                         unregisterRequest( requestId );
                     }
+                    return;
+                case VK_SHARE_COMPLETE:
+                    log( "Share complete, postId: " + event.level );
+                    return;
+                case VK_SHARE_CANCEL:
+                    log( "Share cancelled" );
+                    return;
+                case VK_SHARE_ERROR:
+                    log( "Share error: " + event.level );
                     return;
             }
         }
