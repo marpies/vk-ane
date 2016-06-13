@@ -23,5 +23,8 @@ public class AIRVKEvent {
 	public static final String VK_TOKEN_UPDATE = "vkTokenUpdate";
 	public static final String VK_REQUEST_SUCCESS = "vkRequestSuccess";
 	public static final String VK_REQUEST_ERROR = "vkRequestError";
+	public static final String VK_SHARE_COMPLETE = "vkShareComplete";
+	public static final String VK_SHARE_CANCEL = "vkShareCancel";
+	public static final String VK_SHARE_ERROR = "vkShareError";
 
 }
