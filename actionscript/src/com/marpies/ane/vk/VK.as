@@ -140,6 +140,14 @@ package com.marpies.ane.vk {
         }
 
         /**
+         * Checks whether the access token has the given permission.
+         */
+        public static function hasPermission( permission:String ):Boolean {
+            if( mAccessToken === null || mAccessToken.permissions === null ) return false;
+            return mAccessToken.permissions.indexOf( permission ) >= 0;
+        }
+
+        /**
          * Adds callback that will be called when access token is updated.
          * @param callback Function to be called when access token is updated. It should expect zero parameters.
          *
