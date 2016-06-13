@@ -60,7 +60,7 @@ public class VKSdk {
 
     private static Handler handler = new Handler(Looper.getMainLooper());
 
-    public static final boolean DEBUG = false;
+    public static boolean DEBUG = false;
     public static final boolean DEBUG_API_ERRORS = false;
     public static final String SDK_TAG = "VK SDK";
     public static final String SDK_APP_ID = "com_vk_sdk_AppId";

@@ -32,7 +32,9 @@ public class InitFunction extends BaseFunction {
 	public FREObject call( FREContext context, FREObject[] args ) {
 		super.call( context, args );
 
-		AIR.setLogEnabled( FREObjectUtils.getBoolean( args[1] ) );
+		boolean enableLogs = FREObjectUtils.getBoolean( args[1] );
+		AIR.setLogEnabled( enableLogs );
+		VKSdk.DEBUG = enableLogs;
 		int appId = Integer.valueOf( FREObjectUtils.getString( args[0] ) );
 
 		AIR.log( "Initializing VKSdk" );
