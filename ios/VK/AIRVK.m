@@ -23,6 +23,7 @@
 #import "Functions/IsLoggedInFunction.h"
 #import "Functions/LogoutFunction.h"
 #import "Functions/RequestFunction.h"
+#import "Functions/ShareFunction.h"
 
 static BOOL airVKLogEnabled = NO;
 FREContext airVKExtContext = nil;
@@ -72,32 +73,20 @@ static NSString* airVKAuthPermissionsKey = @"vkAuthPermissions";
  *
  **/
 
-void VKAddFunction( FRENamedFunction* array, const char* name, FREFunction function, uint32_t* index ) {
-    array[(*index)].name = (const uint8_t*) name;
-    array[(*index)].functionData = NULL;
-    array[(*index)].function = function;
-    (*index)++;
-}
+FRENamedFunction vk_extFunctions[] = {
+    { (const uint8_t*) "init",               0, vk_init },
+    { (const uint8_t*) "auth",               0, vk_auth },
+    { (const uint8_t*) "applicationOpenURL", 0, vk_applicationOpenURL },
+    { (const uint8_t*) "logout",             0, vk_logout },
+    { (const uint8_t*) "request",            0, vk_request },
+    { (const uint8_t*) "share",              0, vk_share },
+    { (const uint8_t*) "isLoggedIn",         0, vk_isLoggedIn }
+};
 
-void VKContextInitializer( void* extData,
-                                  const uint8_t* ctxType,
-                                  FREContext ctx,
-                                  uint32_t* numFunctionsToSet,
-                                  const FRENamedFunction** functionsToSet ) {
-    uint32_t numFunctions = 6;
-    *numFunctionsToSet = numFunctions;
+void VKContextInitializer( void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToSet, const FRENamedFunction** functionsToSet ) {
+    *numFunctionsToSet = sizeof( vk_extFunctions ) / sizeof( FRENamedFunction );
     
-    FRENamedFunction* functionArray = (FRENamedFunction*) malloc( sizeof( FRENamedFunction ) * numFunctions );
-    
-    uint32_t index = 0;
-    VKAddFunction( functionArray, "init", &vk_init, &index );
-    VKAddFunction( functionArray, "auth", &vk_auth, &index );
-    VKAddFunction( functionArray, "applicationOpenURL", &vk_applicationOpenURL, &index );
-    VKAddFunction( functionArray, "logout", &vk_logout, &index );
-    VKAddFunction( functionArray, "request", &vk_request, &index );
-    VKAddFunction( functionArray, "isLoggedIn", &vk_isLoggedIn, &index );
-    
-    *functionsToSet = functionArray;
+    *functionsToSet = vk_extFunctions;
     
     airVKExtContext = ctx;
 }

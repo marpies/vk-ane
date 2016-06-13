@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 
-#ifndef AIRVKEvent_h
-#define AIRVKEvent_h
+#import <AIRExtHelpers/FlashRuntimeExtensions.h>
 
-#import <Foundation/Foundation.h>
-
-static const NSString* VK_AUTH_ERROR = @"vkAuthError";
-static const NSString* VK_AUTH_SUCCESS = @"vkAuthSuccess";
-static const NSString* VK_TOKEN_UPDATE = @"vkTokenUpdate";
-static const NSString* VK_REQUEST_SUCCESS = @"vkRequestSuccess";
-static const NSString* VK_REQUEST_ERROR = @"vkRequestError";
-static const NSString* VK_SHARE_COMPLETE = @"vkShareComplete";
-static const NSString* VK_SHARE_CANCEL = @"vkShareCancel";
-
-#endif /* AIRVKEvent_h */
+FREObject vk_share( FREContext context, void* functionData, uint32_t argc, FREObject argv[] );

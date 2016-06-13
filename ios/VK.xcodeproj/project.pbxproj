@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C3073AE81BE2C77C00EC89B7 /* InitFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3073AE21BE2C77C00EC89B7 /* InitFunction.m */; };
+		C31D237A1D0EA7B90072A89B /* ShareFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C31D23791D0EA7B90072A89B /* ShareFunction.m */; };
 		C32B00D71D0D5FC300B5FA17 /* RequestFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C32B00D61D0D5FC300B5FA17 /* RequestFunction.m */; };
 		C3376BD81D08109300A8BCA5 /* VKApiBase.m in Sources */ = {isa = PBXBuildFile; fileRef = C3376B631D08109300A8BCA5 /* VKApiBase.m */; };
 		C3376BD91D08109300A8BCA5 /* VKApiCaptcha.m in Sources */ = {isa = PBXBuildFile; fileRef = C3376B651D08109300A8BCA5 /* VKApiCaptcha.m */; };
@@ -90,6 +91,8 @@
 /* Begin PBXFileReference section */
 		C3073AE11BE2C77C00EC89B7 /* InitFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitFunction.h; sourceTree = "<group>"; };
 		C3073AE21BE2C77C00EC89B7 /* InitFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitFunction.m; sourceTree = "<group>"; };
+		C31D23781D0EA7B90072A89B /* ShareFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareFunction.h; sourceTree = "<group>"; };
+		C31D23791D0EA7B90072A89B /* ShareFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareFunction.m; sourceTree = "<group>"; };
 		C32B00D51D0D5FC300B5FA17 /* RequestFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestFunction.h; sourceTree = "<group>"; };
 		C32B00D61D0D5FC300B5FA17 /* RequestFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestFunction.m; sourceTree = "<group>"; };
 		C3376B621D08109300A8BCA5 /* VKApiBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKApiBase.h; sourceTree = "<group>"; };
@@ -275,6 +278,8 @@
 				C3C6BA6D1D0945BD00BA29DB /* LogoutFunction.m */,
 				C32B00D51D0D5FC300B5FA17 /* RequestFunction.h */,
 				C32B00D61D0D5FC300B5FA17 /* RequestFunction.m */,
+				C31D23781D0EA7B90072A89B /* ShareFunction.h */,
+				C31D23791D0EA7B90072A89B /* ShareFunction.m */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -593,6 +598,7 @@
 				C3376C001D08109300A8BCA5 /* NSString+MD5.m in Sources */,
 				C3376C0E1D08109300A8BCA5 /* VKSdk.m in Sources */,
 				C3376BFB1D08109300A8BCA5 /* VKRequestsScheduler.m in Sources */,
+				C31D237A1D0EA7B90072A89B /* ShareFunction.m in Sources */,
 				C3376C051D08109300A8BCA5 /* VKCaptchaView.m in Sources */,
 				C3376BE11D08109300A8BCA5 /* VKApiObject.m in Sources */,
 				C3C6BA6B1D093F5200BA29DB /* ApplicationOpenURLFunction.m in Sources */,
