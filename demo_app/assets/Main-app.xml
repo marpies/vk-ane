@@ -8,7 +8,7 @@
 
     <name>VK Demo</name>
 
-    <versionNumber>0.0.4</versionNumber>
+    <versionNumber>1.0.0</versionNumber>
 
     <extensions>
         <extensionID>com.marpies.ane.vk</extensionID>

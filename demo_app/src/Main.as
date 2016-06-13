@@ -25,6 +25,7 @@ package {
         private var mGetUsersRequestBtn:Button;
         private var mGetAppPermissionsRequestBtn:Button;
         private var mWallPostRequestBtn:Button;
+        private var mShareBtn:Button;
 
         public function Main() {
             super();
@@ -75,6 +76,12 @@ package {
             mWallPostRequestBtn.isEnabled = false;
             mWallPostRequestBtn.addEventListener( Event.TRIGGERED, onWallPostRequestBtnTriggered );
             addChild( mWallPostRequestBtn );
+
+            mShareBtn = new Button();
+            mShareBtn.label = "Share dialog";
+            mShareBtn.isEnabled = false;
+            mShareBtn.addEventListener( Event.TRIGGERED, onShareBtnTriggered );
+            addChild( mShareBtn );
 
             VK.addAccessTokenUpdateCallback( onAccessTokenUpdated );
             VK.init( VK_APP_ID, true );
@@ -128,6 +135,16 @@ package {
                     .send();
         }
 
+        private function onShareBtnTriggered():void {
+            VK.share
+                    .setText( "Hello, sharing this fine link with you." )
+                    .setAttachmentLink( "VK.com", "http://vk.com" )
+                    .setCompleteCallback( onShareCompleted )
+                    .setCancelCallback( onShareCancelled )
+                    .setErrorCallback( onShareFailed )
+                    .showDialog();
+        }
+
         /**
          *
          *
@@ -141,6 +158,7 @@ package {
             mAuthBtn.isEnabled = VK.isSupported && !VK.isLoggedIn;
             mGetAppPermissionsRequestBtn.isEnabled = VK.isSupported && VK.isLoggedIn; // User must be authorized to use this request
             mWallPostRequestBtn.isEnabled = VK.isSupported && VK.isLoggedIn; // User must be authorized to use this request
+            mShareBtn.isEnabled = VK.isSupported && VK.isLoggedIn; // User must be authorized to use sharing
 
             if( VK.accessToken === null ) {
                 Logger.log( "VK::onAccessTokenUpdated | not logged in" );
@@ -180,6 +198,18 @@ package {
 
         private function onWallPostError( error:String ):void {
             Logger.log( "VK::onWallPostError: " + error );
+        }
+
+        private function onShareCompleted( postId:String ):void {
+            Logger.log( "VK::onShareCompleted postId: " + postId );
+        }
+
+        private function onShareCancelled():void {
+            Logger.log( "VK::onShareCancelled" );
+        }
+
+        private function onShareFailed( errorMessage:String ):void {
+            Logger.log( "VK::onShareFailed " + errorMessage );
         }
 
     }
