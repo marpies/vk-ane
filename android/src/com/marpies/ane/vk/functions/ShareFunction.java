@@ -25,6 +25,7 @@ import com.marpies.ane.vk.data.AIRVKEvent;
 import com.marpies.ane.vk.utils.AIR;
 import com.marpies.ane.vk.utils.BitmapDataUtils;
 import com.marpies.ane.vk.utils.FREObjectUtils;
+import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.model.VKApiPhoto;
 import com.vk.sdk.api.model.VKPhotoArray;
@@ -94,7 +95,10 @@ public class ShareFunction extends BaseFunction {
 			@Override
 			public void onVkShareComplete( int postId ) {
 				AIR.log( "VKShareDialogListener::onVkShareComplete postId: " + postId );
-				AIR.dispatchEvent( AIRVKEvent.VK_SHARE_COMPLETE, String.valueOf( postId ) );
+				/* Prefix the post id with user id to match the behavior of iOS VK SDK */
+				String resultPostId = (VKAccessToken.currentToken() != null) ? (VKAccessToken.currentToken().userId + "_") : "";
+				resultPostId += postId;
+				AIR.dispatchEvent( AIRVKEvent.VK_SHARE_COMPLETE, resultPostId );
 			}
 
 			@Override
