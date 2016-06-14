@@ -231,7 +231,7 @@ package com.marpies.ane.vk {
         }
 
         /**
-         * Getter for internal request builder used for creating and sending requests to VK network.
+         * Getter for internal sharing builder used for creating and showing native UI share dialog.
          */
         public static function get share():VKShareBuilder {
             if( !isSupported ) return null;
