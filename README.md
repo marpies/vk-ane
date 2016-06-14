@@ -118,7 +118,7 @@ function onAccessTokenUpdated():void {
 }
 ```
 
-The `onAccessTokenUpdated` method will be called repeatedly if the access token changes (for example, when user logs in). You can remove the callback using:
+The `onAccessTokenUpdated` method will be called every time the access token changes (for example, when user logs in). You can remove the callback using:
 
 ```as3
 VK.removeAccessTokenUpdateCallback( onAccessTokenUpdated );
