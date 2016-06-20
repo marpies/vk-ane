@@ -9,6 +9,11 @@ Development of this extension is supported by [Master Tigra, Inc.](https://githu
 * Requests (see [API methods](https://new.vk.com/dev/methods))
 * Sharing with native UI
 
+## Native SDK versions
+
+* iOS `v1.3.17`
+* Android `v1.6.7`
+
 ## Getting started
 
 Create an app in the [VK dashboard](http://vk.com/apps?act=manage). In the Settings tab, configure your app's IDs for iOS and/or Android. AIR apps for Android have their identifier prefixed with `air.` (unless you manually override this behavior). Thus the settings must reflect this. The settings for *Main activity for Android:* is simply your app ID (Android package name) followed by `.AppEntry`. See [the official guide](https://github.com/VKCOM/vk-android-sdk#fingerprint-receiving-via-keytool) on how to get your *Signing certificate fingerprint*.
@@ -274,6 +279,11 @@ ANT build scripts are available in the [build](build/) directory. Edit [build.pr
 The ANE has been written by [Marcel Piestansky](https://twitter.com/marpies) and is distributed under [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
 
 ## Change log
+
+#### June 20, 2016 (v1.0.1)
+
+* FIXED parsing of access token's email property
+* ADDED `sdkVersion` getter
 
 #### June 13, 2016 (v1.0.0)
 
