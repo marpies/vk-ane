@@ -11,8 +11,8 @@ Development of this extension is supported by [Master Tigra, Inc.](https://githu
 
 ## Native SDK versions
 
-* iOS `v1.3.17`
-* Android `v1.6.7`
+* [iOS](ios/VK/VK/VKSdkVersion.h#L23) `v1.3.17`
+* [Android](android/src/com/vk/sdk/VKSdkVersion.java#L28) `v1.6.7`
 
 ## Getting started
 
