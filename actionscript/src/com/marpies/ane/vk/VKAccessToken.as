@@ -62,7 +62,7 @@ package com.marpies.ane.vk {
                 token.mSecret = json.secret;
             }
             if( "email" in json ) {
-                token.mEmail = json.secret;
+                token.mEmail = json.email;
             }
             return token;
         }
