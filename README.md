@@ -137,7 +137,7 @@ To authorize user, call the `authorize` method along with the requested permissi
 VK.authorize( new <String>[ VKPermissions.FRIENDS ], onAuthResult );
 
 function onAuthResult( errorMessage:String ):void {
-	if( errorMessage == null ) {
+	if( errorMessage != null ) {
 		// Error logging in or user denied
 	} else {
 		// Good to go
