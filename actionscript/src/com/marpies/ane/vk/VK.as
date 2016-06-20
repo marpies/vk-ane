@@ -91,8 +91,7 @@ package com.marpies.ane.vk {
             mLogEnabled = showLogs;
 
             /* Initialize context */
-            mContext = ExtensionContext.createExtensionContext( EXTENSION_ID, null );
-            if( !mContext ) {
+            if( !initExtensionContext() ) {
                 log( "Error creating extension context for " + EXTENSION_ID );
                 return false;
             }
@@ -253,7 +252,19 @@ package com.marpies.ane.vk {
          * Extension version.
          */
         public static function get version():String {
-            return "1.0.0";
+            return "1.0.1";
+        }
+
+        /**
+         * Version of the native VK SDK.
+         */
+        public static function get sdkVersion():String {
+            if( !isSupported ) return null;
+            if( !mInitialized && !initExtensionContext() ) {
+                return null;
+            }
+
+            return mContext.call( "sdkVersion" ) as String;
         }
 
         /**
@@ -296,6 +307,17 @@ package com.marpies.ane.vk {
                 mAuthCallback( error );
                 mAuthCallback = null;
             }
+        }
+
+        /**
+         * Initializes extension context.
+         * @return <code>true</code> if initialized successfully, <code>false</code> otherwise.
+         */
+        private static function initExtensionContext():Boolean {
+            if( mContext === null ) {
+                mContext = ExtensionContext.createExtensionContext( EXTENSION_ID, null );
+            }
+            return mContext !== null;
         }
 
         /**

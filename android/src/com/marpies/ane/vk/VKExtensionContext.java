@@ -37,6 +37,7 @@ public class VKExtensionContext extends FREContext {
 		functions.put( "request", new RequestFunction() );
 		functions.put( "share", new ShareFunction() );
 		functions.put( "applicationOpenURL", new ApplicationOpenURLFunction() );
+		functions.put( "sdkVersion", new GetSDKVersion() );
 
 		return functions;
 	}

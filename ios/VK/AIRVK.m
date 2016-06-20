@@ -24,6 +24,7 @@
 #import "Functions/LogoutFunction.h"
 #import "Functions/RequestFunction.h"
 #import "Functions/ShareFunction.h"
+#import "Functions/GetSDKVersion.h"
 
 static BOOL airVKLogEnabled = NO;
 FREContext airVKExtContext = nil;
@@ -80,7 +81,8 @@ FRENamedFunction vk_extFunctions[] = {
     { (const uint8_t*) "logout",             0, vk_logout },
     { (const uint8_t*) "request",            0, vk_request },
     { (const uint8_t*) "share",              0, vk_share },
-    { (const uint8_t*) "isLoggedIn",         0, vk_isLoggedIn }
+    { (const uint8_t*) "isLoggedIn",         0, vk_isLoggedIn },
+    { (const uint8_t*) "sdkVersion",         0, vk_sdkVersion }
 };
 
 void VKContextInitializer( void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToSet, const FRENamedFunction** functionsToSet ) {
