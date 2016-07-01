@@ -41,10 +41,16 @@ public class VKAccessTokenUtils {
 		/* Loop through all permissions and see which one are part of this token */
 		List<String> allPermissions = VKScope.parseVkPermissionsFromInteger( Integer.MAX_VALUE );	// Get all permissions
 		JSONArray activePermissions = new JSONArray();
-		for( String permission : allPermissions ) {
-			if( token.hasScope( permission ) ) {
-				activePermissions.put( permission );
+		/* VKAcessToken's scope may be null, however, it's not
+		 * accessible directly so we have to wrap it in try-catch block */
+		try {
+			for( String permission : allPermissions ) {
+				if( token.hasScope( permission ) ) {
+					activePermissions.put( permission );
+				}
 			}
+		} catch( Exception e ) {
+			// VKAccessToken's 'scope' is null, thus no permissions
 		}
 		addValueForKey( activePermissions.toString(), "permissions", json );
 		return json.toString();
