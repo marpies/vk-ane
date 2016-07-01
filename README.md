@@ -278,7 +278,11 @@ ANT build scripts are available in the [build](build/) directory. Edit [build.pr
 ## Author
 The ANE has been written by [Marcel Piestansky](https://twitter.com/marpies) and is distributed under [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
 
-## Change log
+## Changelog
+
+#### July 1, 2016 (v1.0.2)
+
+* FIXED null pointer exception when accessing scope of VKAccessToken
 
 #### June 20, 2016 (v1.0.1)
 
