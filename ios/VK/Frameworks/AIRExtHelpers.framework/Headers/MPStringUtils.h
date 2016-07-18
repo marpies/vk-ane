@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Marcel Piestansky (http://marpies.com)
+ * Copyright 2015-2016 Marcel Piestansky (http://marpies.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@
 
 @interface MPStringUtils : NSObject
 
-+ (NSString*) getEventErrorJSONString:(int) requestId errorMessage:(NSString*) errorMessage;
++ (NSString*) getEventErrorJSONString:(int) listenerID errorMessage:(NSString*) errorMessage;
 
-+ (NSString*) getSingleValueJSONString:(int) requestId key:(NSString*) key value:(NSString*) value;
++ (NSString*) getSingleValueJSONString:(int) listenerID key:(NSString*) key value:(NSString*) value;
 
-+ (NSString*) getListenerJSONString:(int) requestId;
++ (NSString*) getListenerJSONString:(int) listenerID;
 
 + (NSString*) getJSONString:(NSDictionary*) json;
 
