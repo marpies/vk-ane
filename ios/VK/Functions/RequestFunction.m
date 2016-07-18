@@ -47,8 +47,8 @@ FREObject vk_request( FREContext context, void* functionData, uint32_t argc, FRE
                 responseJSON = [NSMutableDictionary dictionary];
                 responseJSON[@"response"] = originalResponse;
             }
-            /* Put the requestId to the response */
-            responseJSON[@"requestId"] = [NSNumber numberWithInt:requestId];
+            /* Put the requestId to the response, read as listenerID in AS3 */
+            responseJSON[@"listenerID"] = [NSNumber numberWithInt:requestId];
             [AIRVK log:[NSString stringWithFormat:@"VKRequest::onSuccess %@", responseJSON]];
             [AIRVK dispatchEvent:VK_REQUEST_SUCCESS withMessage:[MPStringUtils getJSONString:responseJSON]];
         } errorBlock:^(NSError *error) {

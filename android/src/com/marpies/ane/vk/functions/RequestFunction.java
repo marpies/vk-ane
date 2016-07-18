@@ -147,8 +147,8 @@ public class RequestFunction extends BaseFunction {
 			public void onComplete( VKResponse response ) {
 				AIR.log( "VKRequest::onComplete JSON: " + response.json );
 				try {
-					/* Put the requestId to the response */
-					response.json.put( "requestId", mRequestId );
+					/* Put the requestId to the response, read as listenerID in AS3 */
+					response.json.put( "listenerID", mRequestId );
 					AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_SUCCESS, response.json.toString() );
 				} catch( JSONException e ) {
 					e.printStackTrace();

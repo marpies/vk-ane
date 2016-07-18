@@ -404,12 +404,12 @@ package com.marpies.ane.vk {
                 case VK_REQUEST_SUCCESS:
                     responseJSON = JSON.parse( event.level );
                     log( "Request success" );
-                    requestId = responseJSON.requestId;
+                    requestId = responseJSON.listenerID;
                     request = getRequest( requestId );
                     if( request !== null && request.hasResponseCallback ) {
                         /* Delete 'requestId' from the response JSON (it's manually inserted in
                          * native library for us to retrieve the correct VKRequest here in AS3) */
-                        delete responseJSON.requestId;
+                        delete responseJSON.listenerID;
                         request.responseCallback( responseJSON, request );
                         unregisterRequest( requestId );
                     }
@@ -417,7 +417,7 @@ package com.marpies.ane.vk {
                 case VK_REQUEST_ERROR:
                     responseJSON = JSON.parse( event.level );
                     log( "Request error: " + responseJSON.errorMessage );
-                    requestId = responseJSON.requestId;
+                    requestId = responseJSON.listenerID;
                     request = getRequest( requestId );
                     if( request !== null && request.hasErrorCallback ) {
                         request.errorCallback( responseJSON.errorMessage );

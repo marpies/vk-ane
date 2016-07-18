@@ -18,9 +18,9 @@ package com.marpies.ane.vk.utils;
 
 public class StringUtils {
 
-	public static String getEventErrorJSON( final int requestId, String errorMessage ) {
-		return String.format( "{ \"requestId\": %d, \"errorMessage\": \"%s\" }",
-				requestId,
+	public static String getEventErrorJSON( final int listenerId, String errorMessage ) {
+		return String.format( "{ \"listenerID\": %d, \"errorMessage\": \"%s\" }",
+				listenerId,
 				/* The error message may contain line breaks - these need
 				 * to be removed so that JSON parsing errors do not occur */
 				removeLineBreaks( errorMessage ) );
