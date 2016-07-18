@@ -280,6 +280,14 @@ The ANE has been written by [Marcel Piestansky](https://twitter.com/marpies) and
 
 ## Changelog
 
+#### July 18, 2016
+
+* v1.0.4
+  * FIXED inconsistency in JSON format when sending response from native side to AS3
+
+* v1.0.3
+  * UPDATED AIRExtHelpers.framework
+
 #### July 1, 2016 (v1.0.2)
 
 * FIXED null pointer exception when accessing scope of VKAccessToken
