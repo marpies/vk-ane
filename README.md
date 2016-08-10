@@ -28,7 +28,7 @@ First, add the extension's ID to the `extensions` element.
 </extensions>
 ```
 
-If you are targeting Android, add the following extension as well (unless you know the Android Support library is included by some other extension):
+If you are targeting Android, add the following extension from [this repository](https://github.com/marpies/android-dependency-anes) as well (unless you know the Android Support library is included by some other extension):
 
 ```xml
 <extensions>
