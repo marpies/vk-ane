@@ -19,12 +19,12 @@
 
 #import <Foundation/Foundation.h>
 
-static const NSString* VK_AUTH_ERROR = @"vkAuthError";
-static const NSString* VK_AUTH_SUCCESS = @"vkAuthSuccess";
-static const NSString* VK_TOKEN_UPDATE = @"vkTokenUpdate";
-static const NSString* VK_REQUEST_SUCCESS = @"vkRequestSuccess";
-static const NSString* VK_REQUEST_ERROR = @"vkRequestError";
-static const NSString* VK_SHARE_COMPLETE = @"vkShareComplete";
-static const NSString* VK_SHARE_CANCEL = @"vkShareCancel";
+static NSString* const VK_AUTH_ERROR = @"vkAuthError";
+static NSString* const VK_AUTH_SUCCESS = @"vkAuthSuccess";
+static NSString* const VK_TOKEN_UPDATE = @"vkTokenUpdate";
+static NSString* const VK_REQUEST_SUCCESS = @"vkRequestSuccess";
+static NSString* const VK_REQUEST_ERROR = @"vkRequestError";
+static NSString* const VK_SHARE_COMPLETE = @"vkShareComplete";
+static NSString* const VK_SHARE_CANCEL = @"vkShareCancel";
 
 #endif /* AIRVKEvent_h */

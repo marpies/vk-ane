@@ -66,6 +66,7 @@
 		C3376C0D1D08109300A8BCA5 /* VKPermissions.m in Sources */ = {isa = PBXBuildFile; fileRef = C3376BD41D08109300A8BCA5 /* VKPermissions.m */; };
 		C3376C0E1D08109300A8BCA5 /* VKSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = C3376BD61D08109300A8BCA5 /* VKSdk.m */; };
 		C3376C121D0851A400A8BCA5 /* AIRVK.m in Sources */ = {isa = PBXBuildFile; fileRef = C3376C111D0851A400A8BCA5 /* AIRVK.m */; };
+		C3844D2A1D18363700296D61 /* GetSDKVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = C3844D291D18363700296D61 /* GetSDKVersion.m */; };
 		C3C6BA5D1D08B3E400BA29DB /* AIRVKSdkDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C6BA5C1D08B3E400BA29DB /* AIRVKSdkDelegate.m */; };
 		C3C6BA601D08C2BC00BA29DB /* AuthFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C6BA5F1D08C2BC00BA29DB /* AuthFunction.m */; };
 		C3C6BA651D092E3700BA29DB /* VKAccessTokenUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C6BA641D092E3700BA29DB /* VKAccessTokenUtils.m */; };
@@ -73,7 +74,7 @@
 		C3C6BA6B1D093F5200BA29DB /* ApplicationOpenURLFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C6BA6A1D093F5200BA29DB /* ApplicationOpenURLFunction.m */; };
 		C3C6BA6E1D0945BD00BA29DB /* LogoutFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C6BA6D1D0945BD00BA29DB /* LogoutFunction.m */; };
 		C3C6BA711D09466600BA29DB /* IsLoggedInFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C6BA701D09466600BA29DB /* IsLoggedInFunction.m */; };
-		C3C6BA731D094A3100BA29DB /* AIRExtHelpers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3C6BA721D094A3100BA29DB /* AIRExtHelpers.framework */; };
+		C3E5013B1D105AC4006EBD78 /* AIRExtHelpers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3E5013A1D105AC4006EBD78 /* AIRExtHelpers.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -211,6 +212,8 @@
 		C3376C101D0851A400A8BCA5 /* AIRVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIRVK.h; sourceTree = "<group>"; };
 		C3376C111D0851A400A8BCA5 /* AIRVK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIRVK.m; sourceTree = "<group>"; };
 		C35331DE1B7BCE8A003A7521 /* libVK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libVK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3844D281D18363700296D61 /* GetSDKVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetSDKVersion.h; sourceTree = "<group>"; };
+		C3844D291D18363700296D61 /* GetSDKVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetSDKVersion.m; sourceTree = "<group>"; };
 		C3C6BA5B1D08B3E400BA29DB /* AIRVKSdkDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIRVKSdkDelegate.h; path = Utils/AIRVKSdkDelegate.h; sourceTree = "<group>"; };
 		C3C6BA5C1D08B3E400BA29DB /* AIRVKSdkDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AIRVKSdkDelegate.m; path = Utils/AIRVKSdkDelegate.m; sourceTree = "<group>"; };
 		C3C6BA5E1D08C2BC00BA29DB /* AuthFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthFunction.h; sourceTree = "<group>"; };
@@ -226,7 +229,7 @@
 		C3C6BA6D1D0945BD00BA29DB /* LogoutFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogoutFunction.m; sourceTree = "<group>"; };
 		C3C6BA6F1D09466600BA29DB /* IsLoggedInFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsLoggedInFunction.h; sourceTree = "<group>"; };
 		C3C6BA701D09466600BA29DB /* IsLoggedInFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IsLoggedInFunction.m; sourceTree = "<group>"; };
-		C3C6BA721D094A3100BA29DB /* AIRExtHelpers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AIRExtHelpers.framework; sourceTree = "<group>"; };
+		C3E5013A1D105AC4006EBD78 /* AIRExtHelpers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AIRExtHelpers.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,7 +237,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3C6BA731D094A3100BA29DB /* AIRExtHelpers.framework in Frameworks */,
+				C3E5013B1D105AC4006EBD78 /* AIRExtHelpers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +283,8 @@
 				C32B00D61D0D5FC300B5FA17 /* RequestFunction.m */,
 				C31D23781D0EA7B90072A89B /* ShareFunction.h */,
 				C31D23791D0EA7B90072A89B /* ShareFunction.m */,
+				C3844D281D18363700296D61 /* GetSDKVersion.h */,
+				C3844D291D18363700296D61 /* GetSDKVersion.m */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -486,7 +491,7 @@
 		C37509F81C79388900516C15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C3C6BA721D094A3100BA29DB /* AIRExtHelpers.framework */,
+				C3E5013A1D105AC4006EBD78 /* AIRExtHelpers.framework */,
 				C3376C0F1D08109B00A8BCA5 /* VKSdkResources.bundle */,
 			);
 			path = Frameworks;
@@ -614,6 +619,7 @@
 				C3376BDE1D08109300A8BCA5 /* VKApiPhotos.m in Sources */,
 				C3376BF81D08109300A8BCA5 /* VKObject.m in Sources */,
 				C3376BE31D08109300A8BCA5 /* VKAudio.m in Sources */,
+				C3844D2A1D18363700296D61 /* GetSDKVersion.m in Sources */,
 				C3376BFD1D08109300A8BCA5 /* VKImageParameters.m in Sources */,
 				C3376BEB1D08109300A8BCA5 /* VKSchool.m in Sources */,
 				C3376BE51D08109300A8BCA5 /* VKDocs.m in Sources */,
