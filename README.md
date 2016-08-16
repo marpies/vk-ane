@@ -11,7 +11,7 @@ Development of this extension is supported by [Master Tigra, Inc.](https://githu
 
 ## Native SDK versions
 
-* [iOS](ios/VK/VK/VKSdkVersion.h#L23) `v1.3.17`
+* [iOS](ios/VK/VK/VKSdkVersion.h#L23) `v1.4.4`
 * [Android](android/src/com/vk/sdk/VKSdkVersion.java#L28) `v1.6.7`
 
 ## Getting started
@@ -279,6 +279,11 @@ ANT build scripts are available in the [build](build/) directory. Edit [build.pr
 The ANE has been written by [Marcel Piestansky](https://twitter.com/marpies) and is distributed under [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
 
 ## Changelog
+
+#### August 16, 2016 (v1.0.5)
+
+* UPDATED iOS SDK to v1.4.4
+* FIXED bug causing out-of-range array access if there are multiple token callbacks and one of them is removed when they are triggered
 
 #### July 18, 2016
 
