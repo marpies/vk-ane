@@ -1,5 +1,7 @@
 # VK | VK.com extension for Adobe AIR (iOS & Android)
 
+VK is a social network that unites people all over the world and helps them communicate comfortably and promptly. It accounts for over half of Russian-speaking traffic in the world. Add easy-to-use VK API to your social games and apps and get access to more than 170 million users.
+
 Development of this extension is supported by [Master Tigra, Inc.](https://github.com/mastertigra)
 
 ## Features
