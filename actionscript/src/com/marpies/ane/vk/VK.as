@@ -393,12 +393,18 @@ package com.marpies.ane.vk {
                     dispatchAuthResult( event.level );
                     return;
                 case VK_TOKEN_UPDATE:
-                    log( "Token update, callbacks " + mTokenUpdateCallbacks.length );
-                    parseAccessToken( event.level );
-                    /* Call the registered callbacks */
                     var length:int = mTokenUpdateCallbacks.length;
-                    for( var i:int = 0; i < length; ++i ) {
-                        mTokenUpdateCallbacks[i]();
+                    log( "Token update, callbacks " + length );
+                    parseAccessToken( event.level );
+                    /* Create callbacks copy because a callback may be removed when triggered */
+                    if( length > 0 ) {
+                        var tempCallbacks:Vector.<Function> = new <Function>[];
+                        for( var i:int = 0; i < length; ++i ) {
+                            tempCallbacks[i] = mTokenUpdateCallbacks[i];
+                        }
+                        for( i = 0; i < length; ++i ) {
+                            tempCallbacks[i]();
+                        }
                     }
                     return;
                 case VK_REQUEST_SUCCESS:
