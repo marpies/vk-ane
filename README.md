@@ -282,6 +282,10 @@ The ANE has been written by [Marcel Piestansky](https://twitter.com/marpies) and
 
 ## Changelog
 
+#### August 19, 2016 (v1.0.6)
+
+* FIXED incorrect conditional operator when removing token callback
+
 #### August 16, 2016 (v1.0.5)
 
 * UPDATED iOS SDK to v1.4.4
