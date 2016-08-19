@@ -182,7 +182,7 @@ package com.marpies.ane.vk {
             if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
 
             var index:int = mTokenUpdateCallbacks.indexOf( callback );
-            if( index < 0 ) {
+            if( index >= 0 ) {
                 mTokenUpdateCallbacks.removeAt( index );
             }
         }
