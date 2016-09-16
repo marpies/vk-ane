@@ -18,7 +18,7 @@ package com.marpies.ane.vk.functions;
 
 import android.content.Intent;
 import com.adobe.air.AndroidActivityWrapper;
-import com.adobe.air.IActivityResultCallback;
+import com.adobe.air.IAIRVKActivityResultCallback;
 import com.adobe.fre.FREArray;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREObject;
@@ -33,7 +33,7 @@ import com.vk.sdk.api.VKError;
 
 import java.util.ArrayList;
 
-public class AuthFunction extends BaseFunction implements IActivityResultCallback {
+public class AuthFunction extends BaseFunction implements IAIRVKActivityResultCallback {
 
 	@Override
 	public FREObject call( FREContext context, FREObject[] args ) {

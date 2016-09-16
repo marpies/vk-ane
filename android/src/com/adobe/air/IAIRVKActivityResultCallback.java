@@ -16,6 +16,6 @@
 
 package com.adobe.air;
 
-public interface IActivityResultCallback extends AndroidActivityWrapper.ActivityResultCallback {
+public interface IAIRVKActivityResultCallback extends AndroidActivityWrapper.ActivityResultCallback {
 
 }
