@@ -1,7 +1,7 @@
 <extension xmlns="http://ns.adobe.com/air/extension/20.0">
 
   <id>com.marpies.ane.vk</id>
-  <versionNumber>1.0.6</versionNumber>
+  <versionNumber>1.0.7</versionNumber>
 
   <platforms>
     <platform name="iPhone-ARM">
