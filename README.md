@@ -282,6 +282,10 @@ The ANE has been written by [Marcel Piestansky](https://twitter.com/marpies) and
 
 ## Changelog
 
+#### September 16, 2016 (v1.0.7)
+
+* ADDED prefix to IActivityResultCallback so that the class is unique for this extension
+
 #### August 19, 2016 (v1.0.6)
 
 * FIXED incorrect conditional operator when removing token callback
