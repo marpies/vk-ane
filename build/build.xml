@@ -66,6 +66,7 @@
     <target name="android-build" description="Build Android Library">
         <!-- build .aar using gradle -->
         <exec executable="${gradle.exec}" dir="../android">
+            <env key="ANDROID_HOME" path="${android.sdk}"/>
             <arg value="build" />
             <arg line="-x lint" />
         </exec>
