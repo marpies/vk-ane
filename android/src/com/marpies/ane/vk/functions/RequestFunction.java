@@ -57,7 +57,7 @@ public class RequestFunction extends BaseFunction {
 			AIR.log( "Sending VKRequest " + method );
 			VKRequest request = new VKRequest( method );
 			request.addExtraParameters( vkParameters );
-			request.executeWithListener( getRequestListener() );
+			request.executeWithListener( getRequestListener( mRequestId ) );
 		}
 		/* Or dispatch error */
 		else {
@@ -141,18 +141,18 @@ public class RequestFunction extends BaseFunction {
 		return FREObjectType.UNKNOWN;
 	}
 
-	private VKRequest.VKRequestListener getRequestListener() {
+	private VKRequest.VKRequestListener getRequestListener( final int requestId ) {
 		return new VKRequest.VKRequestListener() {
 			@Override
 			public void onComplete( VKResponse response ) {
 				AIR.log( "VKRequest::onComplete JSON: " + response.json );
 				try {
 					/* Put the requestId to the response, read as listenerID in AS3 */
-					response.json.put( "listenerID", mRequestId );
+					response.json.put( "listenerID", requestId );
 					AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_SUCCESS, response.json.toString() );
 				} catch( JSONException e ) {
 					e.printStackTrace();
-					AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_ERROR, StringUtils.getEventErrorJSON( mRequestId, "Request succeeded but could not retrieve response." ) );
+					AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_ERROR, StringUtils.getEventErrorJSON( requestId, "Request succeeded but could not retrieve response." ) );
 				}
 			}
 
@@ -160,9 +160,9 @@ public class RequestFunction extends BaseFunction {
 			public void attemptFailed( VKRequest request, int attemptNumber, int totalAttempts ) {
 				AIR.log( "VKRequest::attemptFailed n: " + attemptNumber + " total: " + totalAttempts  );
 				if( attemptNumber < totalAttempts ) {
-					request.executeWithListener( getRequestListener() );
+					request.executeWithListener( getRequestListener( requestId ) );
 				} else {
-					AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_ERROR, StringUtils.getEventErrorJSON( mRequestId, "Request timed out." ) );
+					AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_ERROR, StringUtils.getEventErrorJSON( requestId, "Request timed out." ) );
 				}
 			}
 
@@ -171,10 +171,9 @@ public class RequestFunction extends BaseFunction {
 				// captcha error, validation error
 				AIR.log( "VKRequest::onError: " + error.errorMessage + " reason: " + error.errorReason + " code: " + error.errorCode );
 				String errorMessage = ((error.errorMessage != null) ? error.errorMessage : "Empty error message") + " | Error code: " + error.errorCode;
-				AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_ERROR, StringUtils.getEventErrorJSON( mRequestId, errorMessage ) );
+				AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_ERROR, StringUtils.getEventErrorJSON( requestId, errorMessage ) );
 			}
 		};
 	}
 
 }
-
