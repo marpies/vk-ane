@@ -37,15 +37,13 @@ FREObject vk_request( FREContext context, void* functionData, uint32_t argc, FRE
         [request executeWithResultBlock:^(VKResponse *response) {
             /* Can be an array OR dictionary */
             id originalResponse = response.json;
-            NSMutableDictionary* responseJSON = nil;
-            /* The response is already a dictionary, create mutable one */
+            NSMutableDictionary* responseJSON = [NSMutableDictionary dictionary];
+            responseJSON[@"response"] = originalResponse;
+            /* The response is a dictionary, check for 'response' key */
             if( [originalResponse isKindOfClass:[NSDictionary class]] ) {
-                responseJSON = [NSMutableDictionary dictionaryWithDictionary:originalResponse];
-            }
-            /* The response is an array, add it to our response dictionary */
-            else {
-                responseJSON = [NSMutableDictionary dictionary];
-                responseJSON[@"response"] = originalResponse;
+                if( originalResponse[@"response"] != nil ) {
+                    responseJSON[@"response"] = originalResponse[@"response"];
+                }
             }
             /* Put the requestId to the response, read as listenerID in AS3 */
             responseJSON[@"listenerID"] = [NSNumber numberWithInt:requestId];
