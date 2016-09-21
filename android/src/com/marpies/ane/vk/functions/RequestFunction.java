@@ -28,6 +28,7 @@ import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RequestFunction extends BaseFunction {
 
@@ -147,9 +148,15 @@ public class RequestFunction extends BaseFunction {
 			public void onComplete( VKResponse response ) {
 				AIR.log( "VKRequest::onComplete JSON: " + response.json );
 				try {
+					JSONObject json = new JSONObject();
+					if( response.json.has( "response" ) ) {
+						json.put( "response", response.json.get( "response" ) );
+					} else {
+						json.put( "response", response.json );
+					}
 					/* Put the requestId to the response, read as listenerID in AS3 */
-					response.json.put( "listenerID", requestId );
-					AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_SUCCESS, response.json.toString() );
+					json.put( "listenerID", requestId );
+					AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_SUCCESS, json.toString() );
 				} catch( JSONException e ) {
 					e.printStackTrace();
 					AIR.dispatchEvent( AIRVKEvent.VK_REQUEST_ERROR, StringUtils.getEventErrorJSON( requestId, "Request succeeded but could not retrieve response." ) );
