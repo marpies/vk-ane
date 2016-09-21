@@ -282,6 +282,12 @@ The ANE has been written by [Marcel Piestansky](https://twitter.com/marpies) and
 
 ## Changelog
 
+#### September 21, 2016 (v1.1.0)
+
+* UPDATED request response to provide unified `response` object across iOS and Android
+  * The `response` object no longer contains *response* key. Make sure to revise your request callbacks after updating to this version.
+* FIXED request callback not getting called if new request is made before receiving response (thanks [Liklainy](https://github.com/Liklainy))
+
 #### September 16, 2016 (v1.0.7)
 
 * ADDED prefix to IActivityResultCallback so that the class is unique for this extension
