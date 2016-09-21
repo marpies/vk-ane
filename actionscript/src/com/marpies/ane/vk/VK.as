@@ -416,7 +416,11 @@ package com.marpies.ane.vk {
                         /* Delete 'requestId' from the response JSON (it's manually inserted in
                          * native library for us to retrieve the correct VKRequest here in AS3) */
                         delete responseJSON.listenerID;
-                        request.responseCallback( responseJSON, request );
+                        var response:Object = responseJSON.response;
+                        if( response is String ) {
+                            response = JSON.parse( response as String );
+                        }
+                        request.responseCallback( response, request );
                         unregisterRequest( requestId );
                     }
                     return;
