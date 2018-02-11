@@ -1,0 +1,9 @@
+actionscript/.idea
+Main.iml
+android/.idea
+android/.gradle
+build/temp
+demo_app/out
+android/build
+.DS_STORE
+UserInterfaceState.xcuserstate
