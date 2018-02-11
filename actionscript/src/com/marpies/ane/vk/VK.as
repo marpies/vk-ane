@@ -16,14 +16,12 @@
 
 package com.marpies.ane.vk {
 
-    import flash.desktop.NativeApplication;
-    import flash.events.InvokeEvent;
-    import flash.events.StatusEvent;
-    import flash.external.ExtensionContext;
-    import flash.system.Capabilities;
-    import flash.utils.Dictionary;
+	import flash.events.StatusEvent;
+	import flash.external.ExtensionContext;
+	import flash.system.Capabilities;
+	import flash.utils.Dictionary;
 
-    public class VK {
+	public class VK {
 
         private static const TAG:String = "[VK]";
         private static const EXTENSION_ID:String = "com.marpies.ane.vk";
@@ -105,8 +103,6 @@ package com.marpies.ane.vk {
 
             /* Listen for native library events */
             mContext.addEventListener( StatusEvent.STATUS, onStatus );
-            /* Listen for invoke event */
-            NativeApplication.nativeApplication.addEventListener( InvokeEvent.INVOKE, onInvokeHandler );
 
             /* Call init */
             mContext.call( "init", appId, showLogs );
@@ -194,7 +190,6 @@ package com.marpies.ane.vk {
             if( !isSupported || !mInitialized ) return;
 
             mContext.removeEventListener( StatusEvent.STATUS, onStatus );
-            NativeApplication.nativeApplication.removeEventListener( InvokeEvent.INVOKE, onInvokeHandler );
 
             mRequestBuilder = null;
             mShareBuilder = null;
@@ -455,23 +450,6 @@ package com.marpies.ane.vk {
                     }
                     removeShareCallbacks();
                     return;
-            }
-        }
-
-        private static function onInvokeHandler( event:InvokeEvent ):void {
-            log( "onInvoke " + event.reason + " args: " + event.arguments );
-
-            /* Handle openURL invoke event, to avoid iOS app delegate method swizzling */
-            if( event.reason && event.reason.toLowerCase() == "openurl" ) {
-                const args:Array = event.arguments;
-                var url:String = String( args[0] );
-                if( url !== null ) {
-                    var sourceApp:String = null;
-                    if( args.length > 1 ) {
-                        sourceApp = String( args[1] );
-                    }
-                    mContext.call( "applicationOpenURL", url , sourceApp );
-                }
             }
         }
 

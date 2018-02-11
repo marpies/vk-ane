@@ -32,6 +32,76 @@ static AIRVKSdkDelegate* vkDelegateSharedInstance = nil;
     return vkDelegateSharedInstance;
 }
 
+- (id) init {
+    self = [super init];
+    
+    if( self != nil ) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            id delegate = [[UIApplication sharedApplication] delegate];
+            if( delegate == nil ) {
+                return;
+            }
+            
+            Class adobeDelegateClass = object_getClass( delegate );
+            
+            // Open URL iOS 9+
+            if( NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_8_4 ) {
+                SEL delegateSelector = @selector(application:openURL:options:);
+                [self overrideDelegate:adobeDelegateClass method:delegateSelector withMethod:@selector(vkair_application:openURL:options:)];
+            }
+            // Open URL iOS 8 and older
+            else {
+                SEL delegateSelector = @selector(application:openURL:sourceApplication:annotation:);
+                [self overrideDelegate:adobeDelegateClass method:delegateSelector withMethod:@selector(vkair_application:openURL:sourceApplication:annotation:)];
+            }
+        });
+    }
+    
+    return self;
+}
+
+# pragma mark - Swizzled
+
+- (BOOL) vkair_application:(UIApplication *) application openURL:(NSURL *) url options:(NSDictionary<NSString*,id> *) options {
+    if( [self respondsToSelector:@selector(vkair_application:openURL:options:)] ) {
+        [VKSdk processOpenURL:url fromApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]];
+        return [self vkair_application:application openURL:url options:options];
+    }
+    return NO;
+}
+
+- (BOOL) vkair_application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    if( [self respondsToSelector:@selector(vkair_application:openURL:sourceApplication:annotation:)] ) {
+        [VKSdk processOpenURL:url fromApplication:sourceApplication];
+        return [self vkair_application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+    }
+    return NO;
+}
+
+# pragma mark - Private
+
+- (BOOL) overrideDelegate:(Class) delegateClass method:(SEL) delegateSelector withMethod:(SEL) swizzledSelector {
+    Method originalMethod = class_getInstanceMethod(delegateClass, delegateSelector);
+    Method swizzledMethod = class_getInstanceMethod([self class], swizzledSelector);
+    
+    BOOL didAddMethod =
+    class_addMethod(delegateClass,
+                    swizzledSelector,
+                    method_getImplementation(originalMethod),
+                    method_getTypeEncoding(originalMethod));
+    
+    if( didAddMethod ) {
+        class_replaceMethod(delegateClass,
+                            delegateSelector,
+                            method_getImplementation(swizzledMethod),
+                            method_getTypeEncoding(swizzledMethod));
+    } else {
+        method_exchangeImplementations(originalMethod, swizzledMethod);
+    }
+    return didAddMethod;
+}
+
 /**
  *
  * VKSdkDelegate
