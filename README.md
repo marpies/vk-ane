@@ -282,6 +282,10 @@ The ANE has been written by [Marcel Piestansky](https://twitter.com/marpies) and
 
 ## Changelog
 
+#### February 12, 2018 (v1.2.0)
+
+* UPDATED app launch from URL (iOS)
+
 #### September 21, 2016 (v1.1.0)
 
 * UPDATED request response to provide unified `response` object across iOS and Android
