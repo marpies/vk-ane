@@ -7,3 +7,4 @@ demo_app/out
 android/build
 .DS_STORE
 UserInterfaceState.xcuserstate
+ios/build
