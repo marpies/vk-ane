@@ -28,6 +28,14 @@
         </applicationDeployment>
     </platform>
 
+    <platform name="Android-ARM64">
+        <applicationDeployment>
+            <nativeLibrary>libVK.jar</nativeLibrary>
+            <initializer>com.marpies.ane.vk.VKExtension</initializer>
+            <finalizer>com.marpies.ane.vk.VKExtension</finalizer>
+        </applicationDeployment>
+    </platform>
+
     <platform name="default">
         <applicationDeployment/>
     </platform>
