@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-#import <AIRExtHelpers/FlashRuntimeExtensions.h>
+#import <AIRExtHelpers/MPUIApplicationListener.h>
 #import <Foundation/Foundation.h>
 
-@interface AIRVK : NSObject
+@interface AIRVK : NSObject<MPUIApplicationListener>
 
++ (nonnull id) sharedInstance;
 + (void) dispatchEvent:(const NSString*) eventName;
 + (void) dispatchEvent:(const NSString*) eventName withMessage:(NSString*) message;
 + (void) log:(const NSString*) message;
@@ -26,5 +27,7 @@
 
 + (void) storeAuthPermissions:(NSArray*) permissions;
 + (NSArray*) getAuthPermissions;
+
+- (BOOL) application:(nullable UIApplication *) application openURL:(nullable NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(nullable id)annotation;
 
 @end

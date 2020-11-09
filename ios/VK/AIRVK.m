@@ -25,12 +25,21 @@
 #import "Functions/RequestFunction.h"
 #import "Functions/ShareFunction.h"
 #import "Functions/GetSDKVersion.h"
+#import <AIRExtHelpers/MPUIApplicationDelegate.h>
 
 static BOOL airVKLogEnabled = NO;
 FREContext airVKExtContext = nil;
 static NSString* airVKAuthPermissionsKey = @"vkAuthPermissions";
+static AIRVK* airVKSharedInstance = nil;
 
 @implementation AIRVK
+
++ (id) sharedInstance {
+    if (airVKSharedInstance == nil) {
+        airVKSharedInstance = [[AIRVK alloc] init];
+    }
+    return airVKSharedInstance;
+}
 
 + (void) dispatchEvent:(const NSString*) eventName {
     [self dispatchEvent:eventName withMessage:@""];
@@ -64,6 +73,11 @@ static NSString* airVKAuthPermissionsKey = @"vkAuthPermissions";
     return [defaults objectForKey:airVKAuthPermissionsKey];
 }
 
+- (BOOL)application:(nullable UIApplication *)application openURL:(nullable NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(nullable id)annotation {
+    [VKSdk processOpenURL:url fromApplication:sourceApplication];
+    return true;
+}
+
 @end
 
 /**
@@ -90,10 +104,14 @@ void VKContextInitializer( void* extData, const uint8_t* ctxType, FREContext ctx
     
     *functionsToSet = vk_extFunctions;
     
+    [[MPUIApplicationDelegate sharedInstance] addListener:[AIRVK sharedInstance]];
+    
     airVKExtContext = ctx;
 }
 
 void VKContextFinalizer( FREContext ctx ) {
+    [[MPUIApplicationDelegate sharedInstance] removeListener:[AIRVK sharedInstance]];
+    
     VKSdk* vk = [VKSdk instance];
     if( vk != nil ) {
         [vk unregisterDelegate:[AIRVKSdkDelegate sharedInstance]];
