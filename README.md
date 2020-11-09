@@ -13,7 +13,7 @@ Development of this extension is supported by [Master Tigra, Inc.](https://githu
 
 ## Native SDK versions
 
-* [iOS](ios/VK/VK/VKSdkVersion.h#L23) `v1.4.4`
+* [iOS](ios/VK/VK/VKSdkVersion.h#L23) `v1.4.7`
 * [Android](android/src/com/vk/sdk/VKSdkVersion.java#L28) `v1.6.7`
 
 ## Getting started
@@ -30,13 +30,15 @@ First, add the extension's ID to the `extensions` element.
 </extensions>
 ```
 
-If you are targeting Android, add the following extension from [this repository](https://github.com/marpies/android-dependency-anes) as well (unless you know the Android Support library is included by some other extension):
+If you are targeting Android, add the following extension from [this repository](https://github.com/distriqt/ANE-AndroidSupport) as well:
 
 ```xml
 <extensions>
-    <extensionID>com.marpies.ane.androidsupport</extensionID>
+    <extensionID>androidx.core</extensionID>
 </extensions>
 ```
+
+> Credits to [Distriqt](https://github.com/distriqt) for providing these extensions.
 
 For iOS support, add the following to `iPhone / InfoAdditions` element where `{APP_ID}` is the *Application ID* as specified in your VK dashboard:
 
@@ -281,6 +283,13 @@ ANT build scripts are available in the [build](build/) directory. Edit [build.pr
 The ANE has been written by [Marcel Piestansky](https://twitter.com/marpies) and is distributed under [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
 
 ## Changelog
+
+#### Novemeber 9, 2020 (v1.3.0)
+
+* Added support for Android 64bit
+* Support AndroidX
+* Updated VK iOS SDK
+* Fixed iOS auth via web view
 
 #### February 12, 2018 (v1.2.0)
 
