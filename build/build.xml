@@ -15,14 +15,9 @@
 
     -->
     <target name="ios" description="Build iOS Library">
+
         <!-- make the build directory for the objc code -->
         <mkdir dir="temp/ios/build/"/>
-
-        <!-- clean the build -->
-        <exec executable="xcodebuild" failonerror="true" dir="../ios/">
-            <arg line="-project ${name}.xcodeproj"/>
-            <arg line="-alltargets clean"/>
-        </exec>
 
         <!-- compile the ios lib -->
         <exec executable="xcodebuild" failonerror="true" dir="../ios/">
@@ -30,6 +25,7 @@
             <arg line="-sdk ${ios.sdkversion}"/>
             <arg line="-alltargets"/>
             <arg line="-configuration Release"/>
+            <arg line="-quiet"/>
             <arg line="SYMROOT=../build/temp/ios/build/"/>
         </exec>
 
